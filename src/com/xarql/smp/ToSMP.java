@@ -15,6 +15,11 @@ public class ToSMP {
 	public static final char LIST_START = '[';
 	public static final char LIST_END = ']';
 
+	public static void main(String[] args) throws IllegalAccessException {
+		System.out.println(encode(new Car()));
+		System.out.println(prettyPrint(encode(new Car())));
+	}
+
 	public static String prettyPrint(String smp) {
 		final StringBuilder builder = new StringBuilder();
 		int indent = 0;
