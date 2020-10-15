@@ -1,8 +1,0 @@
-{
-        year: 1998;
-        model: "Honda Accord";
-        engine: {
-                cylinders: 6;
-                name: "VTEC";
-        };
-}
