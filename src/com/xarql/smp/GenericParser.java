@@ -1,6 +1,5 @@
 package com.xarql.smp;
 
-import org.antlr.v4.runtime.tree.ParseTree;
 import test.java.Car;
 
 import java.util.HashMap;
@@ -17,8 +16,10 @@ public class GenericParser {
      */
     public static void main(String[] args) throws IllegalAccessException {
         final String smp = encode(new Car());
-        Map<StringPath, Object> data = parse(smp);
-        System.out.println(data.get(new StringPath("year")));
+        if(Verifier.verifyOrPrint(smp)) {
+            Map<StringPath, Object> data = parse(smp);
+            System.out.println(data.get(new StringPath("year")));
+        }
     }
 
     /**

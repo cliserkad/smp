@@ -11,6 +11,7 @@ BLOCK_COMMENT: '/*' .*? '*/' -> channel(HIDDEN);
 // skip over whitespace
 WS : [ \t\r\n]+ -> skip;
 
+CHAR_QUOTE: '\'';
 QUOTE: '"';
 STRING_LIT: QUOTE (~["\\] | '\\' .)* QUOTE;
 // keywords
@@ -28,6 +29,7 @@ DOT: '.';
 SEPARATOR: ',';
 PAIR_END: ';';
 ASSIGN: ':';
+NEGATIVE: '-';
 
 DIGIT               : '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 fragment UPLETTER   : [A-Z];
@@ -35,5 +37,5 @@ fragment DNLETTER   : [a-z];
 fragment LETTER     : UPLETTER | DNLETTER;
 fragment ALPHANUM   : LETTER | DIGIT;
 fragment UNDERSCORE : '_';
-KEYNAME   : DNLETTER (LETTER | DIGIT | UNDERSCORE)*;
 CHAR_LIT: '\'' . '\'';
+KEYNAME : .+;

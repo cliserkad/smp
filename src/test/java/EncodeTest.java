@@ -1,5 +1,6 @@
 package test.java;
 
+import com.xarql.smp.Verifier;
 import org.junit.jupiter.api.Test;
 import static com.xarql.smp.ToSMP.encode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,6 +12,7 @@ public class EncodeTest {
 	@Test
 	public void testCar() throws IllegalAccessException {
 		assertEquals(EXPECTED, encode(new Car()));
+		assert Verifier.verifyOrPrint(encode(new Car()));
 	}
 
 }
