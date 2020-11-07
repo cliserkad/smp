@@ -5,6 +5,7 @@ public class Car {
 	public final String model;
 	public final Engine engine;
 	public final char type;
+	public final char[] driveModes = {'p', 'r', 'n', 'd', 'l'};
 
 	public Car() {
 		year = 1998;

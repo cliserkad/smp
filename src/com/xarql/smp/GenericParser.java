@@ -5,7 +5,7 @@ import test.java.Car;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.xarql.smp.ToSMP.*;
+import static com.xarql.smp.SimpleEncoder.*;
 
 public class GenericParser {
 
@@ -19,7 +19,13 @@ public class GenericParser {
         if(Verifier.verifyOrPrint(smp)) {
             Map<StringPath, Object> data = parse(smp);
             System.out.println(data.get(new StringPath("year")));
+            System.out.println(data.get(new StringPath("model")));
+            System.out.println(data.get(new StringPath("driveModes")));
         }
+        final String smp2 = encode(new SimpleEncoder());
+        System.out.println(prettyPrint(smp2));
+        Map<StringPath, Object> data2 = parse(smp2);
+        System.out.println(data2.get(new StringPath("CHAR_QUOTE")));
     }
 
     /**
@@ -34,20 +40,31 @@ public class GenericParser {
 
         StringPath currentPath = new StringPath();
         boolean inStringLit = false;
-        String s = "";
+        boolean inCharLit = false;
+        StringBuilder builder = new StringBuilder();
         for(int i = 0; i < smp.length(); i++) {
-            if(smp.charAt(i) == ToSMP.PAIR_END) {
-                out.put(currentPath, parsePrimitive(s));
-                currentPath = currentPath.delete();
-                s = "";
-            } else if(smp.charAt(i) == ToSMP.ASSIGN) {
-                currentPath = currentPath.append(s);
-                s = "";
+            if(smp.charAt(i) == BACKSLASH) {
+                i++;
+                builder.append(smp.charAt(i));
+            } else {
+                if(smp.charAt(i) == CHAR_QUOTE && !inStringLit)
+                    inCharLit = !inCharLit;
+                else if(smp.charAt(i) == QUOTE && !inCharLit)
+                    inStringLit = !inStringLit;
+                if(!inCharLit && !inStringLit) {
+                    if(smp.charAt(i) == ASSIGN) {
+                        currentPath = currentPath.append(builder.toString());
+                        builder.delete(0, builder.length());
+                    } else if(smp.charAt(i) == PAIR_END) {
+                        out.put(currentPath.copy(), parsePrimitive(builder.toString()));
+                        builder.delete(0, builder.length());
+                        currentPath = currentPath.delete();
+                    } else if(!Character.isWhitespace(smp.charAt(i)) && smp.charAt(i) != OBJ_START)
+                        builder.append(smp.charAt(i));
+                }
+                else
+                    builder.append(smp.charAt(i));
             }
-            else if(smp.charAt(i) == ToSMP.QUOTE)
-                inStringLit = !inStringLit;
-            else if(inStringLit || (!Character.isWhitespace(smp.charAt(i)) && smp.charAt(i) != ToSMP.OBJ_START))
-                s += smp.charAt(i);
         }
 
         return out;
@@ -62,8 +79,12 @@ public class GenericParser {
     public static Object parsePrimitive(String primitive) {
         if(primitive.equals("" + OBJ_END))
             return new PlaceHolder();
-        if(primitive.charAt(0) == ToSMP.CHAR_QUOTE && primitive.charAt(2) == ToSMP.CHAR_QUOTE)
-            return primitive.charAt(1);
+        if(primitive.charAt(0) == CHAR_QUOTE) {
+            if(primitive.charAt(1) == BACKSLASH)
+                return primitive.charAt(2);
+            else
+                return primitive.charAt(1);
+        }
         try {
             return Integer.parseInt(primitive);
         } catch(NumberFormatException e) {
@@ -84,7 +105,7 @@ public class GenericParser {
         } catch(NumberFormatException e) {
             // do nothing
         }
-        return primitive;
+        return primitive.substring(1, primitive.length() - 1);
     }
 
 }

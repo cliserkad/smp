@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static com.xarql.smp.GenericParser.parse;
-import static com.xarql.smp.ToSMP.encode;
+import static com.xarql.smp.SimpleEncoder.encode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ParseTest {
