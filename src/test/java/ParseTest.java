@@ -20,7 +20,10 @@ public class ParseTest {
 
     @Test
     public void testCar() throws IllegalAccessException {
-        final Map<StringPath, Object> data = parse(encode(new Car()));
+        verifyData(parse(encode(new Car())));
+    }
+
+    public static void verifyData(Map<StringPath, Object> data) {
         assertEquals(EXPECTED_YEAR, data.get(new StringPath("year")));
         assertEquals(EXPECTED_MODEL, data.get(new StringPath("model")));
         assertEquals(EXPECTED_TYPE, data.get(new StringPath("type")));

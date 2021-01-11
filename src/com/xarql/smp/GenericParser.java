@@ -26,6 +26,11 @@ public class GenericParser {
         System.out.println(prettyPrint(smp2));
         Map<StringPath, Object> data2 = parse(smp2);
         System.out.println(data2.get(new StringPath("CHAR_QUOTE")));
+
+        System.out.println();
+        System.out.println();
+
+        System.out.println(prettyPrint(encode(new Car())));
     }
 
     /**
@@ -77,6 +82,8 @@ public class GenericParser {
      * @return An object with appropriate type and value
      */
     public static Object parsePrimitive(String primitive) {
+        if(primitive.equals(""))
+            return null;
         if(primitive.equals("" + OBJ_END))
             return new PlaceHolder();
         if(primitive.charAt(0) == CHAR_QUOTE) {
