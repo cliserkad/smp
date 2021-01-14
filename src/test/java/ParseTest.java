@@ -17,6 +17,11 @@ public class ParseTest {
     public static final int EXPECTED_ENGINE_CYLINDERS = 6;
     public static final String EXPECTED_ENGINE_NAME = "VTEC";
     public static final float EXPECTED_ENGINE_MPG = 14.834f;
+    public static final char[] EXPECTED_DRIVE_MODES = { 'p', 'r', 'n', 'd', 'l' };
+
+    public static void main(String[] args) throws IllegalAccessException {
+        new ParseTest().testCar();
+    }
 
     @Test
     public void testCar() throws IllegalAccessException {
@@ -30,6 +35,8 @@ public class ParseTest {
         assertEquals(EXPECTED_ENGINE_CYLINDERS, data.get(new StringPath("engine", "cylinders")));
         assertEquals(EXPECTED_ENGINE_NAME, data.get(new StringPath("engine", "name")));
         assertEquals(EXPECTED_ENGINE_MPG, data.get(new StringPath("engine", "mpg")));
+        for(int i = 0; i < EXPECTED_DRIVE_MODES.length; i++)
+            assertEquals(EXPECTED_DRIVE_MODES[i], data.get(new StringPath("driveModes", "" + i)));
     }
 
 }

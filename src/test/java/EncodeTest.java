@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class EncodeTest {
 
-	public static final String EXPECTED = "{year:1998;model:\"Honda Accord\";engine:{cylinders:6;name:\"VTEC\";mpg:14.834;};type:'c';driveModes:[p,r,n,d,l,];}";
+	public static final String EXPECTED = "{year:1998;model:\"Honda Accord\";engine:{cylinders:6;name:\"VTEC\";mpg:14.834;};type:'c';driveModes:['p','r','n','d','l',];}";
 
 	@Test
 	public void testCar() throws IllegalAccessException {

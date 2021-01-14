@@ -82,22 +82,22 @@ public class SimpleEncoder {
 				if(obj.getClass().getComponentType().isPrimitive()) {
 					if(obj.getClass().getComponentType() == char.class) {
 						for(char c : (char[]) obj)
-							output.append(c).append(SEPARATOR);
+							output.append(encode(c)).append(SEPARATOR);
 					} else if(obj.getClass().getComponentType() == boolean.class) {
 						for(boolean b : (boolean[]) obj)
-							output.append(b).append(SEPARATOR);
+							output.append(encode(b)).append(SEPARATOR);
 					} else if(obj.getClass().getComponentType() == int.class) {
 						for(int i : (int[]) obj)
-							output.append(i).append(SEPARATOR);
+							output.append(encode(i)).append(SEPARATOR);
 					} else if(obj.getClass().getComponentType() == long.class) {
 						for(long l : (long[]) obj)
-							output.append(l).append(SEPARATOR);
+							output.append(encode(l)).append(SEPARATOR);
 					} else if(obj.getClass().getComponentType() == float.class) {
 						for(float f : (float[]) obj)
-							output.append(f).append(SEPARATOR);
+							output.append(encode(f)).append(SEPARATOR);
 					} else if(obj.getClass().getComponentType() == double.class) {
 						for(double d : (double[]) obj)
-							output.append(d).append(SEPARATOR);
+							output.append(encode(d)).append(SEPARATOR);
 					}
 				}
 				else

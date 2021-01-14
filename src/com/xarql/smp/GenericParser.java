@@ -2,7 +2,9 @@ package com.xarql.smp;
 
 import test.java.Car;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.xarql.smp.SimpleEncoder.*;
@@ -33,6 +35,10 @@ public class GenericParser {
         System.out.println(prettyPrint(encode(new Car())));
     }
 
+    public static Map<StringPath, Object> parse(String smp) {
+        return parse(new StringPath(), smp);
+    }
+
     /**
      * Creates a Map which contains the data from an smp encoded string.
      * This makes smp values queryable in an easy to understand manner.
@@ -40,12 +46,13 @@ public class GenericParser {
      * @param smp A string representing any data encoded in smp
      * @return a Map with keys and values from smp
      */
-    public static Map<StringPath, Object> parse(final String smp) {
+    public static Map<StringPath, Object> parse(StringPath currentPath, String smp) {
         final Map<StringPath, Object> out = new HashMap<>();
 
-        StringPath currentPath = new StringPath();
         boolean inStringLit = false;
         boolean inCharLit = false;
+        int listLevel = -1;
+        Map<Integer, Integer> listIndices = new HashMap<>();
         StringBuilder builder = new StringBuilder();
         for(int i = 0; i < smp.length(); i++) {
             if(smp.charAt(i) == BACKSLASH) {
@@ -59,11 +66,20 @@ public class GenericParser {
                 if(!inCharLit && !inStringLit) {
                     if(smp.charAt(i) == ASSIGN) {
                         currentPath = currentPath.append(builder.toString());
-                        builder.delete(0, builder.length());
+                        builder.setLength(0);
+                    } else if(smp.charAt(i) == SEPARATOR) {
+                        out.putAll(parse(currentPath.copy(), listIndices.get(listLevel) + ":" + builder.toString() + ";"));
+                        builder.setLength(0);
+                        listIndices.put(listLevel, listIndices.get(listLevel) + 1);
                     } else if(smp.charAt(i) == PAIR_END) {
                         out.put(currentPath.copy(), parsePrimitive(builder.toString()));
-                        builder.delete(0, builder.length());
+                        builder.setLength(0);
                         currentPath = currentPath.delete();
+                    } else if(smp.charAt(i) == LIST_START) {
+                        listLevel++;
+                        listIndices.put(listLevel, 0);
+                    } else if(smp.charAt(i) == LIST_END) {
+                        listLevel--;
                     } else if(!Character.isWhitespace(smp.charAt(i)) && smp.charAt(i) != OBJ_START)
                         builder.append(smp.charAt(i));
                 }

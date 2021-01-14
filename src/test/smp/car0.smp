@@ -7,5 +7,5 @@
 		mpg: 14.834;
 	};
 	type: 'c';
-	driveModes: [p,r,n,d,l,];
+	driveModes: ['p','r','n','d','l',];
 }
