@@ -2,9 +2,7 @@ package com.xarql.smp;
 
 import test.java.Car;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.xarql.smp.SimpleEncoder.*;
@@ -19,15 +17,15 @@ public class GenericParser {
     public static void main(String[] args) throws IllegalAccessException {
         final String smp = encode(new Car());
         if(Verifier.verifyOrPrint(smp)) {
-            Map<StringPath, Object> data = parse(smp);
-            System.out.println(data.get(new StringPath("year")));
-            System.out.println(data.get(new StringPath("model")));
-            System.out.println(data.get(new StringPath("driveModes")));
+            Map<Path, Object> data = parse(smp);
+            System.out.println(data.get(new Path("year")));
+            System.out.println(data.get(new Path("model")));
+            System.out.println(data.get(new Path("driveModes")));
         }
         final String smp2 = encode(new SimpleEncoder());
         System.out.println(prettyPrint(smp2));
-        Map<StringPath, Object> data2 = parse(smp2);
-        System.out.println(data2.get(new StringPath("CHAR_QUOTE")));
+        Map<Path, Object> data2 = parse(smp2);
+        System.out.println(data2.get(new Path("CHAR_QUOTE")));
 
         System.out.println();
         System.out.println();
@@ -35,8 +33,8 @@ public class GenericParser {
         System.out.println(prettyPrint(encode(new Car())));
     }
 
-    public static Map<StringPath, Object> parse(String smp) {
-        return parse(new StringPath(), smp);
+    public static Map<Path, Object> parse(String smp) {
+        return parse(new Path(), smp);
     }
 
     /**
@@ -46,8 +44,8 @@ public class GenericParser {
      * @param smp A string representing any data encoded in smp
      * @return a Map with keys and values from smp
      */
-    public static Map<StringPath, Object> parse(StringPath currentPath, String smp) {
-        final Map<StringPath, Object> out = new HashMap<>();
+    public static Map<Path, Object> parse(Path currentPath, String smp) {
+        final Map<Path, Object> out = new HashMap<>();
 
         boolean inStringLit = false;
         boolean inCharLit = false;

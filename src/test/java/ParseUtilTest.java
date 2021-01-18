@@ -1,15 +1,12 @@
 package test.java;
 
 import com.xarql.smp.ParseUtil;
-import com.xarql.smp.StringPath;
+import com.xarql.smp.Path;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Map;
 
-import static com.xarql.smp.SimpleEncoder.encode;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ParseUtilTest {
@@ -23,7 +20,7 @@ public class ParseUtilTest {
 	@Test
 	public void testCar0() {
 		try {
-			final Map<StringPath, Object> data = ParseUtil.parse(CAR0);
+			final Map<Path, Object> data = ParseUtil.parse(CAR0);
 			ParseTest.verifyData(data);
 		} catch(Exception e) {
 			assertNull(e);

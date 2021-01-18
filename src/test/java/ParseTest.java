@@ -1,6 +1,6 @@
 package test.java;
 
-import com.xarql.smp.StringPath;
+import com.xarql.smp.Path;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -28,15 +28,15 @@ public class ParseTest {
         verifyData(parse(encode(new Car())));
     }
 
-    public static void verifyData(Map<StringPath, Object> data) {
-        assertEquals(EXPECTED_YEAR, data.get(new StringPath("year")));
-        assertEquals(EXPECTED_MODEL, data.get(new StringPath("model")));
-        assertEquals(EXPECTED_TYPE, data.get(new StringPath("type")));
-        assertEquals(EXPECTED_ENGINE_CYLINDERS, data.get(new StringPath("engine", "cylinders")));
-        assertEquals(EXPECTED_ENGINE_NAME, data.get(new StringPath("engine", "name")));
-        assertEquals(EXPECTED_ENGINE_MPG, data.get(new StringPath("engine", "mpg")));
+    public static void verifyData(Map<Path, Object> data) {
+        assertEquals(EXPECTED_YEAR, data.get(new Path("year")));
+        assertEquals(EXPECTED_MODEL, data.get(new Path("model")));
+        assertEquals(EXPECTED_TYPE, data.get(new Path("type")));
+        assertEquals(EXPECTED_ENGINE_CYLINDERS, data.get(new Path("engine", "cylinders")));
+        assertEquals(EXPECTED_ENGINE_NAME, data.get(new Path("engine", "name")));
+        assertEquals(EXPECTED_ENGINE_MPG, data.get(new Path("engine", "mpg")));
         for(int i = 0; i < EXPECTED_DRIVE_MODES.length; i++)
-            assertEquals(EXPECTED_DRIVE_MODES[i], data.get(new StringPath("driveModes", "" + i)));
+            assertEquals(EXPECTED_DRIVE_MODES[i], data.get(new Path("driveModes", "" + i)));
     }
 
 }
