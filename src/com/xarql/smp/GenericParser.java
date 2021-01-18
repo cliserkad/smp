@@ -51,8 +51,6 @@ public class GenericParser {
 
         boolean inStringLit = false;
         boolean inCharLit = false;
-        int listLevel = -1;
-        Map<Integer, Integer> listIndices = new HashMap<>();
         StringBuilder builder = new StringBuilder();
         for(int i = 0; i < smp.length(); i++) {
             if(smp.charAt(i) == BACKSLASH) {
@@ -68,18 +66,18 @@ public class GenericParser {
                         currentPath = currentPath.append(builder.toString());
                         builder.setLength(0);
                     } else if(smp.charAt(i) == SEPARATOR) {
-                        out.putAll(parse(currentPath.copy(), listIndices.get(listLevel) + ":" + builder.toString() + ";"));
+                        out.putAll(parse(currentPath.delete(), currentPath.last() + ":" + builder.toString() + ";"));
                         builder.setLength(0);
-                        listIndices.put(listLevel, listIndices.get(listLevel) + 1);
+                        int depth = Integer.parseInt(currentPath.last());
+                        currentPath = currentPath.delete().append(depth + 1 + "");
                     } else if(smp.charAt(i) == PAIR_END) {
                         out.put(currentPath.copy(), parsePrimitive(builder.toString()));
                         builder.setLength(0);
                         currentPath = currentPath.delete();
                     } else if(smp.charAt(i) == LIST_START) {
-                        listLevel++;
-                        listIndices.put(listLevel, 0);
+                        currentPath = currentPath.append("" + 0);
                     } else if(smp.charAt(i) == LIST_END) {
-                        listLevel--;
+                        currentPath = currentPath.delete();
                     } else if(!Character.isWhitespace(smp.charAt(i)) && smp.charAt(i) != OBJ_START)
                         builder.append(smp.charAt(i));
                 }

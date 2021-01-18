@@ -52,6 +52,22 @@ public class StringPath {
         return getParts(parts.length);
     }
 
+    public String part(int index) {
+        return parts[index];
+    }
+
+    public String first() {
+        return part(0);
+    }
+
+    public String last() {
+        return part(size() - 1);
+    }
+
+    public int size() {
+        return parts.length;
+    }
+
     @Override
     public int hashCode() {
         return Arrays.hashCode(parts);
