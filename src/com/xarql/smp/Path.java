@@ -1,8 +1,12 @@
 package com.xarql.smp;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Path {
+public class Path implements Serializable {
+    // use xxhsum 32 bit unsigned to generate a hash
+    // xxhsum -H32 Path.java
+    public static final long SERIAL_VERSION = 0xd83b1186;
     public static final char PATH_SEPARATOR = '/';
 
     private final String[] parts;
