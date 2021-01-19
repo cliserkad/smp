@@ -2,6 +2,7 @@ package com.xarql.smp;
 
 import test.java.Car;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,37 +51,43 @@ public class GenericParser {
         boolean inStringLit = false;
         boolean inCharLit = false;
         StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < smp.length(); i++) {
-            if(smp.charAt(i) == BACKSLASH) {
-                i++;
-                builder.append(smp.charAt(i));
+        for(int a = 0; a < smp.length(); a++) {
+            if(smp.charAt(a) == BACKSLASH) {
+                a++;
+                builder.append(smp.charAt(a));
             } else {
-                if(smp.charAt(i) == CHAR_QUOTE && !inStringLit)
+                if(smp.charAt(a) == CHAR_QUOTE && !inStringLit)
                     inCharLit = !inCharLit;
-                else if(smp.charAt(i) == QUOTE && !inCharLit)
+                else if(smp.charAt(a) == QUOTE && !inCharLit)
                     inStringLit = !inStringLit;
                 if(!inCharLit && !inStringLit) {
-                    if(smp.charAt(i) == ASSIGN) {
+                    if(smp.charAt(a) == ASSIGN) {
                         currentPath = currentPath.append(builder.toString());
                         builder.setLength(0);
-                    } else if(smp.charAt(i) == SEPARATOR) {
+                    } else if(smp.charAt(a) == SEPARATOR) {
                         out.putAll(parse(currentPath.delete(), currentPath.last() + ":" + builder.toString() + ";"));
                         builder.setLength(0);
                         int depth = Integer.parseInt(currentPath.last());
                         currentPath = currentPath.delete().append(depth + 1 + "");
-                    } else if(smp.charAt(i) == PAIR_END) {
-                        out.put(currentPath.copy(), parsePrimitive(builder.toString()));
+                    } else if(smp.charAt(a) == PAIR_END) {
+                        if(out.get(currentPath) == null)
+                            out.put(currentPath.copy(), parsePrimitive(builder.toString()));
                         builder.setLength(0);
                         currentPath = currentPath.delete();
-                    } else if(smp.charAt(i) == LIST_START) {
+                    } else if(smp.charAt(a) == LIST_START) {
                         currentPath = currentPath.append("" + 0);
-                    } else if(smp.charAt(i) == LIST_END) {
+                    } else if(smp.charAt(a) == LIST_END) {
+                        final int listSize = Integer.parseInt(currentPath.last());
+                        final Object[] array = new Object[listSize];
+                        for(int b = 0; b < listSize; b++)
+                            array[b] = out.get(currentPath.delete().append(b + ""));
                         currentPath = currentPath.delete();
-                    } else if(!Character.isWhitespace(smp.charAt(i)) && smp.charAt(i) != OBJ_START)
-                        builder.append(smp.charAt(i));
+                        out.put(currentPath, array);
+                    } else if(!Character.isWhitespace(smp.charAt(a)) && smp.charAt(a) != OBJ_START)
+                        builder.append(smp.charAt(a));
                 }
                 else
-                    builder.append(smp.charAt(i));
+                    builder.append(smp.charAt(a));
             }
         }
 
