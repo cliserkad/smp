@@ -1,9 +1,9 @@
-#Unsafe Operations
+# Unsafe Operations
 
 Within `TemplateParser.java` there are a plenitude of unsafe operations. This file
 will serve to explain their purpose and quirks.
 
-###Why unsafe?
+### Why unsafe?
 These unsafe operations are necessary due to privacy and finality. The JVM checks
 to ensure code can't access memory which it shouldn't be able to. This is generally great,
 but not if you want to shove a bunch of values in to a type without any knowledge
@@ -15,7 +15,7 @@ To put it simply, Java needs some extra coercion to behave like lower level lang
 I'm still writing the parser and encoders in Java, because I am comfortable with it
 and find its type checking, security, and portability to be extremely helpful most of the time.
 
-###Rows of `instanceof`
+### Rows of `instanceof`
 There are rows of `if` statements containing `instanceof` operations against primitive types.
 This is required because the unsafe memory copying does not respect the byte layout of the types
 within that memory. `instanceof` is an alias for the JVM opcode of `checkcast`.
