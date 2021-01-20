@@ -1,6 +1,7 @@
 package test.java;
 
 public class Engine {
+
 	public final int cylinders;
 	public final String name;
 	public final float mpg;
@@ -10,4 +11,5 @@ public class Engine {
 		name = "VTEC";
 		mpg = 14.834f;
 	}
+
 }

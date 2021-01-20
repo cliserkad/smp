@@ -5,9 +5,9 @@ package com.xarql.smp;
  */
 public class PlaceHolder {
 
-    @Override
-    public String toString() {
-        return getClass().getSimpleName();
-    }
+	@Override
+	public String toString() {
+		return getClass().getSimpleName();
+	}
 
 }

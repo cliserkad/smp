@@ -1,19 +1,17 @@
 package test.java;
 
-import com.xarql.smp.ParseUtil;
-import com.xarql.smp.Path;
-import org.junit.jupiter.api.Test;
-
+import static org.junit.jupiter.api.Assertions.assertNull;
 import java.io.File;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import com.xarql.smp.ParseUtil;
+import com.xarql.smp.Path;
 
 public class ParseUtilTest {
 
 	public static final File CAR0 = new File("src/test/smp/car0.smp");
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		new ParseUtilTest().testCar0();
 	}
 
@@ -22,7 +20,7 @@ public class ParseUtilTest {
 		try {
 			final Map<Path, Object> data = ParseUtil.parse(CAR0);
 			ParseTest.verifyData(data);
-		} catch(Exception e) {
+		} catch(final Exception e) {
 			assertNull(e);
 		}
 	}
