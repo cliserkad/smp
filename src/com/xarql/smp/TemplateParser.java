@@ -17,7 +17,7 @@ public class TemplateParser {
 		Template out = null;
 		Map<Path, Object> data = GenericParser.parse(smp);
 		try {
-			out = (Template) getUnsafe().allocateInstance(template);
+			out = template.getDeclaredConstructor().newInstance();
 
 			for(final Field field : template.getFields()) {
 				// a bunch of weird hacks to inject the value directly in the VM

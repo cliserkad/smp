@@ -3,34 +3,32 @@ package com.xarql.smp;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.Map;
 
 public final class ParseUtil {
 	public static final String NULL_MSG = " must not be null.";
 
-	public static Map<Path, Object> parse(final File file) throws IOException {
+	public static Map<Path, Object> parse(final File file) {
 		ensureNotNull(file, "File");
 		return parse(file.toPath());
 	}
 
-	public static Map<Path, Object> parse(final java.nio.file.Path path) throws IOException {
+	public static Map<Path, Object> parse(final java.nio.file.Path path) {
 		ensureNotNull(path, "Path");
-		return GenericParser.parse(Files.readString(path));
-	}
-
-	public static Map<Path, Object> parseOrDefault(final File file, final String defaultData) {
 		try {
-			return parse(file);
-		} catch(IOException | NullPointerException e) {
-			return GenericParser.parse(defaultData);
-		}
-	}
-
-	public static Map<Path, Object> parseOrDefault(final java.nio.file.Path path, final String defaultData) {
-		try {
-			return parse(path);
-		} catch (IOException | NullPointerException e) {
-			return GenericParser.parse(defaultData);
+			return GenericParser.parse(Files.readString(path));
+		} catch(IOException e) {
+			if(path.toFile().exists()) {
+				e.printStackTrace();
+			} else {
+				try {
+					path.getParent().toFile().mkdirs();
+					path.toFile().createNewFile();
+				} catch(IOException ignored) {
+				}
+			}
+			return new HashMap<>();
 		}
 	}
 

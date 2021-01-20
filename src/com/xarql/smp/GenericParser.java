@@ -64,11 +64,19 @@ public class GenericParser {
                     if(smp.charAt(a) == ASSIGN) {
                         currentPath = currentPath.append(builder.toString());
                         builder.setLength(0);
-                    } else if(smp.charAt(a) == SEPARATOR) {
+                    } else if(smp.charAt(a) == SEPARATOR || smp.charAt(a) == LIST_END) {
                         out.putAll(parse(currentPath.delete(), currentPath.last() + ":" + builder.toString() + ";"));
                         builder.setLength(0);
                         int depth = Integer.parseInt(currentPath.last());
                         currentPath = currentPath.delete().append(depth + 1 + "");
+                        if(smp.charAt(a) == LIST_END) {
+                            final int listSize = Integer.parseInt(currentPath.last());
+                            final Object[] array = new Object[listSize];
+                            for(int b = 0; b < listSize; b++)
+                                array[b] = out.get(currentPath.delete().append(b + ""));
+                            currentPath = currentPath.delete();
+                            out.put(currentPath, array);
+                        }
                     } else if(smp.charAt(a) == PAIR_END) {
                         if(out.get(currentPath) == null)
                             out.put(currentPath.copy(), parsePrimitive(builder.toString()));
@@ -76,13 +84,6 @@ public class GenericParser {
                         currentPath = currentPath.delete();
                     } else if(smp.charAt(a) == LIST_START) {
                         currentPath = currentPath.append("" + 0);
-                    } else if(smp.charAt(a) == LIST_END) {
-                        final int listSize = Integer.parseInt(currentPath.last());
-                        final Object[] array = new Object[listSize];
-                        for(int b = 0; b < listSize; b++)
-                            array[b] = out.get(currentPath.delete().append(b + ""));
-                        currentPath = currentPath.delete();
-                        out.put(currentPath, array);
                     } else if(!Character.isWhitespace(smp.charAt(a)) && smp.charAt(a) != OBJ_START)
                         builder.append(smp.charAt(a));
                 }
