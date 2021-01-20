@@ -110,27 +110,33 @@ public class GenericParser {
             else
                 return primitive.charAt(1);
         }
-        try {
-            return Integer.parseInt(primitive);
-        } catch(NumberFormatException e) {
-            // do nothing
+        if(primitive.trim().equalsIgnoreCase(TRUE))
+            return true;
+        else if(primitive.trim().equalsIgnoreCase(FALSE))
+            return false;
+        else {
+            try {
+                return Integer.parseInt(primitive);
+            } catch (NumberFormatException e) {
+                // do nothing
+            }
+            try {
+                return Float.parseFloat(primitive);
+            } catch (NumberFormatException e) {
+                // do nothing
+            }
+            try {
+                return Long.parseLong(primitive);
+            } catch (NumberFormatException e) {
+                // do nothing
+            }
+            try {
+                return Double.parseDouble(primitive);
+            } catch (NumberFormatException e) {
+                // do nothing
+            }
+            return primitive.substring(1, primitive.length() - 1);
         }
-        try {
-            return Float.parseFloat(primitive);
-        } catch(NumberFormatException e) {
-            // do nothing
-        }
-        try {
-            return Long.parseLong(primitive);
-        } catch(NumberFormatException e) {
-            // do nothing
-        }
-        try {
-            return Double.parseDouble(primitive);
-        } catch(NumberFormatException e) {
-            // do nothing
-        }
-        return primitive.substring(1, primitive.length() - 1);
     }
 
 }

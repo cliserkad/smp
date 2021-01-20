@@ -6,6 +6,9 @@ import java.lang.reflect.Field;
 
 public class SimpleEncoder {
 
+	public static final String TRUE = "true";
+	public static final String FALSE = "false";
+
 	public static final char PAIR_END = ';';
 	public static final char ASSIGN = ':';
 	public static final char QUOTE = '"';
