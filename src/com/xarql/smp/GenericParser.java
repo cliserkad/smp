@@ -2,8 +2,6 @@ package com.xarql.smp;
 
 import test.java.Car;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import static com.xarql.smp.SimpleEncoder.*;
@@ -34,7 +32,7 @@ public class GenericParser {
         System.out.println(prettyPrint(encode(new Car())));
     }
 
-    public static Map<Path, Object> parse(String smp) {
+    public static PathMap<Object> parse(String smp) {
         return parse(new Path(), smp);
     }
 
@@ -45,8 +43,8 @@ public class GenericParser {
      * @param smp A string representing any data encoded in smp
      * @return a Map with keys and values from smp
      */
-    public static Map<Path, Object> parse(Path currentPath, String smp) {
-        final Map<Path, Object> out = new HashMap<>();
+    public static PathMap<Object> parse(Path currentPath, String smp) {
+        final PathMap<Object> out = new PathMap<>();
 
         boolean inStringLit = false;
         boolean inCharLit = false;

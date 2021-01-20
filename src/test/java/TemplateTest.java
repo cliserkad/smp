@@ -3,14 +3,10 @@ package test.java;
 import com.xarql.smp.BadTemplateException;
 import com.xarql.smp.TemplateParser;
 import com.xarql.smp.UnsafeException;
-import com.xarql.smp.Verifier;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static com.xarql.smp.SimpleEncoder.encode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TemplateTest {
 

@@ -15,7 +15,7 @@ public class TemplateParser {
 
 	public static <Template> Template parse(final String smp, final Class<Template> template) throws BadTemplateException, UnsafeException {
 		Template out = null;
-		Map<Path, Object> data = GenericParser.parse(smp);
+		PathMap<Object> data = GenericParser.parse(smp);
 		try {
 			out = template.getDeclaredConstructor().newInstance();
 

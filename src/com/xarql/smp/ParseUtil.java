@@ -9,12 +9,12 @@ import java.util.Map;
 public final class ParseUtil {
 	public static final String NULL_MSG = " must not be null.";
 
-	public static Map<Path, Object> parse(final File file) {
+	public static PathMap<Object> parse(final File file) {
 		ensureNotNull(file, "File");
 		return parse(file.toPath());
 	}
 
-	public static Map<Path, Object> parse(final java.nio.file.Path path) {
+	public static PathMap<Object> parse(final java.nio.file.Path path) {
 		ensureNotNull(path, "Path");
 		try {
 			return GenericParser.parse(Files.readString(path));
@@ -28,7 +28,7 @@ public final class ParseUtil {
 				} catch(IOException ignored) {
 				}
 			}
-			return new HashMap<>();
+			return new PathMap<>();
 		}
 	}
 

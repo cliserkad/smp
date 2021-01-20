@@ -1,6 +1,7 @@
 package test.java;
 
 import com.xarql.smp.Path;
+import com.xarql.smp.PathMap;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -18,7 +19,7 @@ public class NestedListTest {
 
 	@Test
 	public void testParse() throws IllegalAccessException {
-		final Map<Path, Object> data = parse(encode(new Squad()));
+		final PathMap<Object> data = parse(encode(new Squad()));
 		final Path parentList = new Path("members");
 
 		assertEquals("Smith", data.get(parentList.append("0", "0")));
