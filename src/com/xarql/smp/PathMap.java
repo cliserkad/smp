@@ -3,10 +3,6 @@ package com.xarql.smp;
 import java.util.HashMap;
 
 public class PathMap<V> extends HashMap<Path, V> {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1504298304584057564L;
 
 	/**
@@ -19,9 +15,11 @@ public class PathMap<V> extends HashMap<Path, V> {
 	@Override
 	public V get(final Object key) {
 		if(key instanceof String) {
-			return get((String) key);
+			return super.get(new Path((String) key));
 		} else if(key instanceof Path) {
 			return super.get(key);
+		} else if(key instanceof String[]) {
+			return super.get(new Path((String[]) key));
 		} else {
 			return null;
 		}
@@ -51,7 +49,7 @@ public class PathMap<V> extends HashMap<Path, V> {
 	 * @see PathMap#get(Object)
 	 */
 	public V get(final String... parts) {
-		return get(new Path(parts));
+		return super.get(new Path(parts));
 	}
 
 	/**
@@ -70,6 +68,14 @@ public class PathMap<V> extends HashMap<Path, V> {
 		} else {
 			return val;
 		}
+	}
+
+	public V getOrDefault(final Path path, final V defaultValue) {
+		return getOrDefault((Object) path, defaultValue);
+	}
+
+	public V getOrDefault(final String s, final V defaultValue) {
+		return getOrDefault((Object) s, defaultValue);
 	}
 
 }

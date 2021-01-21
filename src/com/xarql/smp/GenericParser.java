@@ -51,8 +51,8 @@ public class GenericParser {
 	 * @param smp A string representing any data encoded in smp
 	 * @return a Map with keys and values from smp
 	 */
-	public static PathMap<Object> parse(Path currentPath, final String smp) {
-		final var out = new PathMap<>();
+	public static ParseData parse(Path currentPath, final String smp) {
+		final var out = new ParseData();
 
 		var inStringLit = false;
 		var inCharLit = false;
@@ -105,7 +105,7 @@ public class GenericParser {
 		return out;
 	}
 
-	public static PathMap<Object> parse(final String smp) {
+	public static ParseData parse(final String smp) {
 		return parse(new Path(), smp);
 	}
 
