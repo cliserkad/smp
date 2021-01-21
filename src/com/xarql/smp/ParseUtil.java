@@ -14,12 +14,12 @@ public final class ParseUtil {
 		}
 	}
 
-	public static PathMap<Object> parse(final File file) {
+	public static ParseData parse(final File file) {
 		ensureNotNull(file, "File");
 		return parse(file.toPath());
 	}
 
-	public static PathMap<Object> parse(final java.nio.file.Path path) {
+	public static ParseData parse(final java.nio.file.Path path) {
 		ensureNotNull(path, "Path");
 		try {
 			return GenericParser.parse(Files.readString(path));
@@ -33,7 +33,7 @@ public final class ParseUtil {
 				} catch(final IOException ignored) {
 				}
 			}
-			return new PathMap<>();
+			return new ParseData();
 		}
 	}
 
