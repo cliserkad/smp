@@ -1,10 +1,10 @@
 package com.xarql.smp;
 
+import java.util.HashMap;
 import com.xarql.util.Path;
 
-import java.util.HashMap;
-
 public class PathMap<V> extends HashMap<Path, V> {
+
 	private static final long serialVersionUID = 1504298304584057564L;
 
 	/**

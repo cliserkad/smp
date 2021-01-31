@@ -21,24 +21,27 @@ public class ElapseTimer {
 
 	@Override
 	public String toString() {
-		final long out = out();
-		if(out / NANO_PER_SEC > 1)
-			return (out / NANO_PER_SEC) + " seconds";
-		else if(out / NANO_PER_MILLI > 1)
-			return (out / NANO_PER_MILLI) + " milliseconds";
-		else
+		final var out = out();
+		if(out / NANO_PER_SEC > 1) {
+			return out / NANO_PER_SEC + " seconds";
+		} else if(out / NANO_PER_MILLI > 1) {
+			return out / NANO_PER_MILLI + " milliseconds";
+		} else {
 			return out + " nanoseconds";
+		}
 	}
 
 	@Override
-	public boolean equals(Object object) {
-		if(this == object)
+	public boolean equals(final Object object) {
+		if(this == object) {
 			return true;
+		}
 		if(object != null && object instanceof ElapseTimer) {
-			ElapseTimer that = (ElapseTimer) object;
+			final var that = (ElapseTimer) object;
 			return start == that.start;
-		} else
+		} else {
 			return false;
+		}
 	}
 
 	@Override

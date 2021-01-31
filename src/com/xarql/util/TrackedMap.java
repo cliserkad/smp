@@ -1,6 +1,10 @@
 package com.xarql.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -62,7 +66,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @param key The key whose existence is in question
 	 * @return Existence of the key
 	 */
-	public boolean contains(K key) {
+	public boolean contains(final K key) {
 		return tracker.contains(key);
 	}
 
@@ -75,7 +79,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @param index The place from which a key will be grabbed
 	 * @return The key at the given index
 	 */
-	public K key(int index) {
+	public K key(final int index) {
 		return tracker.get(index);
 	}
 
@@ -85,10 +89,12 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @param element matchable element
 	 * @return associated key or null
 	 */
-	public K key(E element) {
-		for(int i = 0; i < size(); i++)
-			if(get(i).equals(element))
+	public K key(final E element) {
+		for(var i = 0; i < size(); i++) {
+			if(get(i).equals(element)) {
 				return key(i);
+			}
+		}
 		return null;
 	}
 
@@ -129,17 +135,19 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @param key The key whose index is desired
 	 * @return The index of the key. Or -1 if the key doesn't exist.
 	 */
-	public int indexOf(K key) {
-		if(contains(key))
+	public int indexOf(final K key) {
+		if(contains(key)) {
 			return tracker.lastIndexOf(key);
-		else
+		} else {
 			return -1;
+		}
 	}
 
 	public List<K> keys() {
 		final List<K> copy = new ArrayList<>();
-		for(int i = 0; i < size(); i++)
+		for(var i = 0; i < size(); i++) {
 			copy.add(key(i));
+		}
 		return copy;
 	}
 
@@ -150,11 +158,12 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @param key A duplicate of a K key
 	 * @return K which equals key or null
 	 */
-	public K equivalentKey(K key) {
-		if(contains(key))
+	public K equivalentKey(final K key) {
+		if(contains(key)) {
 			return key(indexOf(key));
-		else
+		} else {
 			return null;
+		}
 	}
 
 	// Element
@@ -165,7 +174,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @param key The known value used to retrieve the unknown object
 	 * @return The element that is being retrieved
 	 */
-	public E get(K key) {
+	public E get(final K key) {
 		return container.get(key).orElse(null);
 	}
 
@@ -177,7 +186,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @param i Index to retrieve an element from
 	 * @return The element at the given index
 	 */
-	public E get(int i) {
+	public E get(final int i) {
 		return container.get(key(i)).orElse(null);
 	}
 
@@ -199,7 +208,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @param key     A key
 	 * @param element An element
 	 */
-	public void add(K key, E element) {
+	public void add(final K key, final E element) {
 		if(!contains(key)) {
 			tracker.add(key);
 			container.put(key, Optional.ofNullable(element));
@@ -212,9 +221,10 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @param key     A key
 	 * @param element An element
 	 */
-	public void put(K key, E element) {
-		if(contains(key))
+	public void put(final K key, final E element) {
+		if(contains(key)) {
 			remove(key);
+		}
 		tracker.add(key);
 		container.put(key, Optional.ofNullable(element));
 	}
@@ -226,7 +236,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 *
 	 * @param key The key to initiate removal with
 	 */
-	public void remove(K key) {
+	public void remove(final K key) {
 		// implementation uses ==, so we need to find the equivalent object's reference
 		container.remove(equivalentKey(key));
 		tracker.remove(key);
@@ -254,7 +264,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 *
 	 * @param index The place at which the key and element should be removed
 	 */
-	public void removeAt(int index) {
+	public void removeAt(final int index) {
 		remove(key(index));
 	}
 
@@ -268,7 +278,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 
 	@Override
 	public Iterator<E> iterator() {
-		return new Iterator<E>() {
+		return new Iterator<>() {
 
 			private int currentIndex = 0;
 
@@ -292,12 +302,13 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if(o instanceof TrackedMap<?, ?>) {
-			TrackedMap<?, ?> map = (TrackedMap<?, ?>) o;
+			final TrackedMap<?, ?> map = (TrackedMap<?, ?>) o;
 			return equals(map);
-		} else
+		} else {
 			return false;
+		}
 	}
 
 	/**
@@ -308,15 +319,18 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @param input A TrackedHashMap with like key and element types
 	 * @return Equity of this and the input
 	 */
-	public boolean equals(TrackedMap<?, ?> input) {
-		if(size() != input.size())
+	public boolean equals(final TrackedMap<?, ?> input) {
+		if(size() != input.size()) {
 			return false;
+		}
 
-		for(int i = 0; i < input.size(); i++) {
-			if(!key(i).equals(input.key(i)))
+		for(var i = 0; i < input.size(); i++) {
+			if(!key(i).equals(input.key(i))) {
 				return false;
-			if(!get(i).equals(input.get(i)))
+			}
+			if(!get(i).equals(input.get(i))) {
 				return false;
+			}
 		}
 		return true;
 	}

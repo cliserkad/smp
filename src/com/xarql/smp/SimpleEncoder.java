@@ -22,7 +22,7 @@ public class SimpleEncoder {
 	public static String prettyEncode(final Object obj) {
 		try {
 			return prettyPrint(encode(obj));
-		} catch(Exception e) {
+		} catch(final Exception e) {
 			e.printStackTrace();
 			return "{error:\"failed to encode\";}";
 		}

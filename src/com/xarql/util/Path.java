@@ -2,9 +2,9 @@ package com.xarql.util;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.lang.Math;
 
 public class Path implements Serializable {
+
 	private static final long serialVersionUID = 5596584287964181971L;
 	public static final char PATH_SEPARATOR = '/';
 

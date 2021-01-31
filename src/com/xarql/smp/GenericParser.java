@@ -14,12 +14,10 @@ import static com.xarql.smp.SimpleEncoder.SEPARATOR;
 import static com.xarql.smp.SimpleEncoder.TRUE;
 import static com.xarql.smp.SimpleEncoder.encode;
 import static com.xarql.smp.SimpleEncoder.prettyPrint;
-
+import java.util.Map;
 import com.xarql.util.Path;
 import com.xarql.util.PlaceHolder;
 import test.java.Car;
-
-import java.util.Map;
 
 public class GenericParser {
 

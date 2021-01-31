@@ -2,11 +2,10 @@ package com.xarql.smp;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.xarql.util.ExceptionPack;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
+import com.xarql.util.ExceptionPack;
 
 public class SyntaxErrorHandler extends BaseErrorListener {
 

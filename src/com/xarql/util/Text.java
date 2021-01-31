@@ -8,51 +8,57 @@ public class Text {
 	/**
 	 * Determines if a character is in the range a-z
 	 */
-	public static boolean a_z(char c) {
+	public static boolean a_z(final char c) {
 		return c > 96 && c < 123;
 	}
 
 	/**
 	 * @see Text#a_z(char)
 	 */
-	public static boolean a_z(String text) {
-		for(int i = 0; i < text.length(); i++)
-			if(!a_z(text.charAt(i)))
+	public static boolean a_z(final String text) {
+		for(var i = 0; i < text.length(); i++) {
+			if(!a_z(text.charAt(i))) {
 				return false;
+			}
+		}
 		return true;
 	}
 
 	/**
 	 * Determines if a character is in the range A-Z
 	 */
-	public static boolean A_Z(char c) {
+	public static boolean A_Z(final char c) {
 		return c > 64 && c < 91;
 	}
 
 	/**
 	 * @see Text#A_Z(char)
 	 */
-	public static boolean A_Z(String text) {
-		for(int i = 0; i < text.length(); i++)
-			if(!A_Z(text.charAt(i)))
+	public static boolean A_Z(final String text) {
+		for(var i = 0; i < text.length(); i++) {
+			if(!A_Z(text.charAt(i))) {
 				return false;
+			}
+		}
 		return true;
 	}
 
 	/**
 	 * Determines if a character is a standard typable character
 	 */
-	public static boolean isTypable(char c) {
+	public static boolean isTypable(final char c) {
 		return c > 31 && c < 127;
 	}
 
 	/**
 	 * @see Text#isTypable(char)
 	 */
-	public static boolean isTypable(String text) {
-		for(int i = 0; i < text.length(); i++)
-			if(!isTypable(text.charAt(i)))
+	public static boolean isTypable(final String text) {
+		for(var i = 0; i < text.length(); i++) {
+			if(!isTypable(text.charAt(i))) {
 				return false;
+			}
+		}
 		return true;
 	}
 
@@ -60,17 +66,19 @@ public class Text {
 	 * Determines if a character has 7 or less significant bits. Therefore, if a
 	 * character is part of ASCII.
 	 */
-	public static boolean isAscii(char c) {
+	public static boolean isAscii(final char c) {
 		return c < 128;
 	}
 
 	/**
 	 * @see Text#isAscii(char)
 	 */
-	public static boolean isAscii(String text) {
-		for(int i = 0; i < text.length(); i++)
-			if(!isAscii(text.charAt(i)))
+	public static boolean isAscii(final String text) {
+		for(var i = 0; i < text.length(); i++) {
+			if(!isAscii(text.charAt(i))) {
 				return false;
+			}
+		}
 		return true;
 	}
 
@@ -78,17 +86,19 @@ public class Text {
 	 * Determines if a character has 8 or less significant bits. Therefore, if a
 	 * character is part of extended ASCII.
 	 */
-	public static boolean isAsciiExtended(char c) {
+	public static boolean isAsciiExtended(final char c) {
 		return c < 256;
 	}
 
 	/**
 	 * @see Text#isAsciiExtended(char)
 	 */
-	public static boolean isAsciiExtended(String text) {
-		for(int i = 0; i < text.length(); i++)
-			if(!isAsciiExtended(text.charAt(i)))
+	public static boolean isAsciiExtended(final String text) {
+		for(var i = 0; i < text.length(); i++) {
+			if(!isAsciiExtended(text.charAt(i))) {
 				return false;
+			}
+		}
 		return true;
 	}
 
@@ -98,10 +108,12 @@ public class Text {
 	 * @param word
 	 * @return true if all chars are in the latin alphabet
 	 */
-	public static boolean isLatinWord(String word) {
-		for(int i = 0; i < word.length(); i++)
-			if(!a_z(word.charAt(i)) && !A_Z(word.charAt(i)))
+	public static boolean isLatinWord(final String word) {
+		for(var i = 0; i < word.length(); i++) {
+			if(!a_z(word.charAt(i)) && !A_Z(word.charAt(i))) {
 				return false;
+			}
+		}
 		return true;
 	}
 
@@ -111,108 +123,117 @@ public class Text {
 	 * @param in A supposedly latin word
 	 * @return true if all chars are latin
 	 */
-	public static boolean isLatin(String in) {
-		for(int i = 0; i < in.length(); i++)
-			if(!a_z(in.charAt(i)) && !A_Z(in.charAt(i)) && !Character.isWhitespace(in.charAt(i)))
+	public static boolean isLatin(final String in) {
+		for(var i = 0; i < in.length(); i++) {
+			if(!a_z(in.charAt(i)) && !A_Z(in.charAt(i)) && !Character.isWhitespace(in.charAt(i))) {
 				return false;
+			}
+		}
 		return true;
 	}
 
-	public static boolean isEmpty(String s) {
+	public static boolean isEmpty(final String s) {
 		return s == null || s.length() == 0;
 	}
 
-	public static String checkNotEmpty(String s) {
-		if(isEmpty(s))
+	public static String checkNotEmpty(final String s) {
+		if(isEmpty(s)) {
 			throw new IllegalArgumentException("Provided string may not be null nor empty");
+		}
 		return s;
 	}
 
-	public static String nonNull(String s) {
-		if(s == null)
+	public static String nonNull(final String s) {
+		if(s == null) {
 			return "";
-		else
+		} else {
 			return s;
+		}
 	}
 
-	public static boolean isPunctuation(char c) {
-		for(char mark : PUNCTUATION_MARKS)
-			if(c == mark)
+	public static boolean isPunctuation(final char c) {
+		for(final char mark : PUNCTUATION_MARKS) {
+			if(c == mark) {
 				return true;
+			}
+		}
 		return false;
 	}
 
-	public static String removePunctuation(String s) {
-		String output = "";
-		for(int i = 0; i < s.length(); i++) {
-			if(!isPunctuation(s.charAt(i)))
+	public static String removePunctuation(final String s) {
+		var output = "";
+		for(var i = 0; i < s.length(); i++) {
+			if(!isPunctuation(s.charAt(i))) {
 				output += s.charAt(i);
+			}
 		}
 		return output;
 	}
 
-	public static String larger(String preferred, String other) {
-		if(other == null)
+	public static String larger(final String preferred, final String other) {
+		if((other == null) || !(other.length() > preferred.length())) {
 			return preferred;
-		else if(other.length() > preferred.length())
+		} else {
 			return other;
-		else
-			return preferred;
+		}
 	}
 
-	public static String largest(String... input) {
+	public static String largest(final String... input) {
 		// null protection
-		if(input == null || input.length == 0)
+		if(input == null || input.length == 0) {
 			return "";
-		else {
-			String output = input[0];
-			for(String s : input)
+		} else {
+			var output = input[0];
+			for(final String s : input) {
 				output = larger(output, s);
+			}
 			return output;
 		}
 	}
 
-	public static String largest(Iterable<String> input) {
+	public static String largest(final Iterable<String> input) {
 		// null protection
-		if(input == null)
+		if(input == null) {
 			return "";
-		else {
+		} else {
 			String output = null;
-			for(String s : input)
+			for(final String s : input) {
 				output = larger(s, output);
+			}
 			return output;
 		}
 	}
 
-	public static String smaller(String preferred, String other) {
-		if(other == null)
+	public static String smaller(final String preferred, final String other) {
+		if((other == null) || !(other.length() < preferred.length())) {
 			return preferred;
-		else if(other.length() < preferred.length())
+		} else {
 			return other;
-		else
-			return preferred;
+		}
 	}
 
-	public static String smallest(String... input) {
+	public static String smallest(final String... input) {
 		// null protection
-		if(input == null || input.length == 0)
+		if(input == null || input.length == 0) {
 			return "";
-		else {
-			String output = input[0];
-			for(String s : input)
+		} else {
+			var output = input[0];
+			for(final String s : input) {
 				output = smaller(output, s);
+			}
 			return output;
 		}
 	}
 
-	public static String smallest(Iterable<String> input) {
+	public static String smallest(final Iterable<String> input) {
 		// null protection
-		if(input == null)
+		if(input == null) {
 			return "";
-		else {
+		} else {
 			String output = null;
-			for(String s : input)
+			for(final String s : input) {
 				output = larger(output, s);
+			}
 			return output;
 		}
 	}
@@ -223,49 +244,55 @@ public class Text {
 	 * @param input CamelCase String
 	 * @return lower_case_string
 	 */
-	public static String undoCamelCase(String input) {
-		String output = "";
-		for(int i = 0; i < input.length(); i++) {
-			if(!Character.isAlphabetic(input.charAt(i)) && input.charAt(i) != ';')
+	public static String undoCamelCase(final String input) {
+		var output = "";
+		for(var i = 0; i < input.length(); i++) {
+			if(!Character.isAlphabetic(input.charAt(i)) && input.charAt(i) != ';') {
 				output += "-";
-			if(i == 0)
+			}
+			if(i == 0) {
 				output += (input.charAt(0) + "").toLowerCase();
-			else {
-				if(Character.isUpperCase(input.charAt(i)))
+			} else {
+				if(Character.isUpperCase(input.charAt(i))) {
 					output += "_" + (input.charAt(i) + "").toLowerCase();
-				else
+				} else {
 					output += "" + input.charAt(i);
+				}
 			}
 		}
 		return output;
 	}
 
-	public static boolean isFirstLetterUppercase(String in) {
+	public static boolean isFirstLetterUppercase(final String in) {
 		return !isEmpty(in) && Character.isUpperCase(in.charAt(0));
 	}
 
-	public static boolean isFirstLetterLowercase(String in) {
+	public static boolean isFirstLetterLowercase(final String in) {
 		return !isEmpty(in) && Character.isLowerCase(in.charAt(0));
 	}
 
-	public static boolean hasUppercase(String in) {
-		if(isEmpty(in))
+	public static boolean hasUppercase(final String in) {
+		if(isEmpty(in)) {
 			return false;
-		else {
-			for(int i = 0; i < in.length(); i++)
-				if(Character.isUpperCase(in.charAt(i)))
+		} else {
+			for(var i = 0; i < in.length(); i++) {
+				if(Character.isUpperCase(in.charAt(i))) {
 					return false;
+				}
+			}
 			return true;
 		}
 	}
 
-	public static boolean hasLowercase(String in) {
-		if(isEmpty(in))
+	public static boolean hasLowercase(final String in) {
+		if(isEmpty(in)) {
 			return false;
-		else {
-			for(int i = 0; i < in.length(); i++)
-				if(Character.isLowerCase(in.charAt(i)))
+		} else {
+			for(var i = 0; i < in.length(); i++) {
+				if(Character.isLowerCase(in.charAt(i))) {
 					return false;
+				}
+			}
 			return true;
 		}
 	}

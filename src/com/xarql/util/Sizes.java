@@ -1,6 +1,7 @@
 package com.xarql.util;
 
 public class Sizes {
+
 	public static final int BIT = 1;
 	public static final int BYTE = 8;
 

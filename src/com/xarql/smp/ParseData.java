@@ -3,6 +3,11 @@ package com.xarql.smp;
 import com.xarql.util.Path;
 
 public class ParseData extends PathMap<Object> {
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -4121653623739479034L;
 	public static final String DEFAULT_STRING = "";
 	public static final char DEFAULT_CHAR = ' ';
 	public static final int DEFAULT_INT = 0;
@@ -33,23 +38,25 @@ public class ParseData extends PathMap<Object> {
 	}
 
 	/**
-	 * Attempts to retrieve a value and cast it to the given type.
-	 * Returns null if the value is incompatible with the given type.
+	 * Attempts to retrieve a value and cast it to the given type. Returns null if
+	 * the value is incompatible with the given type.
 	 */
 	private <T> T getType(final Object key, final Class<T> type) {
-		final Object value = get(key);
-		if(value != null && value.getClass().equals(type))
+		final var value = get(key);
+		if(value != null && value.getClass().equals(type)) {
 			return (T) value;
-		else
+		} else {
 			return null;
+		}
 	}
 
 	public int getIntOrDefault(final String path, final int defaultValue) {
-		final Integer value = getInt(path);
-		if(value == null)
+		final var value = getInt(path);
+		if(value == null) {
 			return defaultValue;
-		else
+		} else {
 			return value;
+		}
 	}
 
 	public int getIntOrDefault(final String path) {
@@ -57,11 +64,12 @@ public class ParseData extends PathMap<Object> {
 	}
 
 	public boolean getBooleanOrDefault(final String path, final boolean defaultValue) {
-		final Boolean value = getBoolean(path);
-		if(value == null)
+		final var value = getBoolean(path);
+		if(value == null) {
 			return defaultValue;
-		else
+		} else {
 			return value;
+		}
 	}
 
 	public boolean getBooleanOrDefault(final String path) {
@@ -69,11 +77,12 @@ public class ParseData extends PathMap<Object> {
 	}
 
 	public char getCharacterOrDefault(final String path, final char defaultValue) {
-		final Character value = getCharacter(path);
-		if(value == null)
+		final var value = getCharacter(path);
+		if(value == null) {
 			return defaultValue;
-		else
+		} else {
 			return value;
+		}
 	}
 
 	public char getCharacterOrDefault(final String path) {
@@ -81,11 +90,12 @@ public class ParseData extends PathMap<Object> {
 	}
 
 	public int getIntOrDefault(final Path path, final int defaultValue) {
-		final Integer value = getInt(path);
-		if(value == null)
+		final var value = getInt(path);
+		if(value == null) {
 			return defaultValue;
-		else
+		} else {
 			return value;
+		}
 	}
 
 	public int getIntOrDefault(final Path path) {
@@ -93,11 +103,12 @@ public class ParseData extends PathMap<Object> {
 	}
 
 	public boolean getBooleanOrDefault(final Path path, final boolean defaultValue) {
-		final Boolean value = getBoolean(path);
-		if(value == null)
+		final var value = getBoolean(path);
+		if(value == null) {
 			return defaultValue;
-		else
+		} else {
 			return value;
+		}
 	}
 
 	public boolean getBooleanOrDefault(final Path path) {
@@ -105,11 +116,12 @@ public class ParseData extends PathMap<Object> {
 	}
 
 	public char getCharacterOrDefault(final Path path, final char defaultValue) {
-		final Character value = getCharacter(path);
-		if(value == null)
+		final var value = getCharacter(path);
+		if(value == null) {
 			return defaultValue;
-		else
+		} else {
 			return value;
+		}
 	}
 
 	public char getCharacterOrDefault(final Path path) {
@@ -117,11 +129,12 @@ public class ParseData extends PathMap<Object> {
 	}
 
 	private <T> T getTypeOrDefault(final Object key, final Class<T> type, final T defaultValue) {
-		final T val = getType(key, type);
-		if(val == null)
+		final var val = getType(key, type);
+		if(val == null) {
 			return defaultValue;
-		else
+		} else {
 			return val;
+		}
 	}
 
 	public String getString(final String... parts) {
@@ -138,19 +151,21 @@ public class ParseData extends PathMap<Object> {
 
 	/** String is special because any object can be converted to it */
 	public String getString(final Object key) {
-		final Object value = get(key);
-		if(value instanceof String)
+		final var value = get(key);
+		if(value instanceof String) {
 			return (String) value;
-		else
+		} else {
 			return String.valueOf(value);
+		}
 	}
 
 	public String getStringOrDefault(final String path, final String defaultValue) {
-		final Object value = get(path);
-		if(value instanceof String)
+		final var value = get(path);
+		if(value instanceof String) {
 			return (String) value;
-		else
+		} else {
 			return defaultValue;
+		}
 	}
 
 	public String getStringOrDefault(final String path) {
@@ -158,11 +173,12 @@ public class ParseData extends PathMap<Object> {
 	}
 
 	public String getStringOrDefault(final Path path, final String defaultValue) {
-		final Object value = get(path);
-		if(value instanceof String)
+		final var value = get(path);
+		if(value instanceof String) {
 			return (String) value;
-		else
+		} else {
 			return defaultValue;
+		}
 	}
 
 	public String getStringOrDefault(final Path path) {

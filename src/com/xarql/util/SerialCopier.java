@@ -1,15 +1,21 @@
 package com.xarql.util;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class SerialCopier<T extends Serializable> implements Copier<T> {
+
 	public static final BestList<Class<?>> SIMPLE_TYPES = new BestList<>(Integer.class, Boolean.class, String.class, Long.class, Double.class, Character.class);
 
 	private final T object;
 
-	public static void main(String[] args) throws Exception {
-		Path p1 = new Path("dev/jokes/funny");
-		Path p2 = copyAndCheck(p1);
+	public static void main(final String[] args) throws Exception {
+		final var p1 = new Path("dev/jokes/funny");
+		final var p2 = copyAndCheck(p1);
 		System.out.println(p1);
 		System.out.println(p2);
 	}
@@ -18,25 +24,27 @@ public class SerialCopier<T extends Serializable> implements Copier<T> {
 		this.object = object;
 	}
 
-	public static <T extends Serializable> T copy(T input) throws IOException, ClassNotFoundException {
+	public static <T extends Serializable> T copy(final T input) throws IOException, ClassNotFoundException {
 		// Create byte buffer
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		final var bos = new ByteArrayOutputStream();
 		// write input to byte buffer
 		new ObjectOutputStream(bos).writeObject(input);
 		// read byte buffer to create the copy
 		return (T) new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray())).readObject();
 	}
 
-	public static <T extends Serializable> T copyAndCheck(T input) throws IOException, ClassNotFoundException {
-		final T copy = copy(input);
-		if(copy == input)
+	public static <T extends Serializable> T copyAndCheck(final T input) throws IOException, ClassNotFoundException {
+		final var copy = copy(input);
+		if(copy == input) {
 			throw new IllegalStateException("The generated copy shares the memory address of the input");
-		if(!copy.equals(input))
+		}
+		if(!copy.equals(input)) {
 			throw new IllegalStateException("The generated copy reported that it isn't equal to the input");
+		}
 		return copy;
 	}
 
-	public static boolean isSimple(Object obj) {
+	public static boolean isSimple(final Object obj) {
 		return obj.getClass().isPrimitive() || SIMPLE_TYPES.contains(obj.getClass());
 	}
 
@@ -44,7 +52,7 @@ public class SerialCopier<T extends Serializable> implements Copier<T> {
 	public Copy<T> copy() {
 		try {
 			return new Copy<>(object, copy(object));
-		} catch (IOException | ClassNotFoundException e) {
+		} catch(IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -54,4 +62,5 @@ public class SerialCopier<T extends Serializable> implements Copier<T> {
 	public T self() {
 		return object;
 	}
+
 }
