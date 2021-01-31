@@ -1,4 +1,4 @@
-package com.xarql.smp;
+package com.xarql.util;
 
 /**
  * Does nothing

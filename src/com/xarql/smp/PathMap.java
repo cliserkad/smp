@@ -1,5 +1,7 @@
 package com.xarql.smp;
 
+import com.xarql.util.Path;
+
 import java.util.HashMap;
 
 public class PathMap<V> extends HashMap<Path, V> {

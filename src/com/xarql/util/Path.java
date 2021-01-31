@@ -1,17 +1,11 @@
-package com.xarql.smp;
+package com.xarql.util;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.lang.Math;
 
 public class Path implements Serializable {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 5596584287964181971L;
-	// use xxhsum 32 bit unsigned to generate a hash
-	// xxhsum -H32 Path.java
-	public static final long SERIAL_VERSION = 0xd83b1186;
 	public static final char PATH_SEPARATOR = '/';
 
 	public static void checkArray(final String[] array) {

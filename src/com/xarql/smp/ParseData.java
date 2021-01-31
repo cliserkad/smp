@@ -1,5 +1,7 @@
 package com.xarql.smp;
 
+import com.xarql.util.Path;
+
 public class ParseData extends PathMap<Object> {
 	public static final String DEFAULT_STRING = "";
 	public static final char DEFAULT_CHAR = ' ';

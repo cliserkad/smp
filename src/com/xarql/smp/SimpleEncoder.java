@@ -19,6 +19,15 @@ public class SimpleEncoder {
 	public static final char SEPARATOR = ',';
 	public static final char BACKSLASH = '\\';
 
+	public static String prettyEncode(final Object obj) {
+		try {
+			return prettyPrint(encode(obj));
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "{error:\"failed to encode\";}";
+		}
+	}
+
 	public static String encode(final Object obj) throws IllegalAccessException {
 		final var output = new StringBuilder();
 

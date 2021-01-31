@@ -5,7 +5,7 @@ import static com.xarql.smp.SimpleEncoder.encode;
 import static com.xarql.smp.SimpleEncoder.prettyPrint;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
-import com.xarql.smp.Path;
+import com.xarql.util.Path;
 
 public class NestedListTest {
 

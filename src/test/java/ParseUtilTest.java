@@ -5,7 +5,7 @@ import java.io.File;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import com.xarql.smp.ParseUtil;
-import com.xarql.smp.Path;
+import com.xarql.util.Path;
 
 public class ParseUtilTest {
 
