@@ -55,7 +55,7 @@ public class NamedObjectList<T extends NamedObject> extends BestList<T> {
 
 	/**
 	 * Get an object from this list based on its name
-	 * 
+	 *
 	 * @param target object's supposed name
 	 * @return T object if found, null otherwise
 	 */

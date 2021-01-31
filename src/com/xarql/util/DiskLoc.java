@@ -5,8 +5,6 @@ import com.xarql.smp.SimpleEncoder;
 
 /**
  * Class that makes Files easier to work with
- *
- * @author Bryan Johnson
  */
 public class DiskLoc extends File implements Copier<DiskLoc> {
 
@@ -39,7 +37,7 @@ public class DiskLoc extends File implements Copier<DiskLoc> {
 
 	/**
 	 * Derives the extension (without '.') from this DiskLoc
-	 * 
+	 *
 	 * @return file's extension
 	 */
 	public String extension() {

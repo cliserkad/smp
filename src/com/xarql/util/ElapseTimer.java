@@ -19,6 +19,11 @@ public class ElapseTimer {
 		return System.nanoTime() - start;
 	}
 
+	/**
+	 * Provides human readable output
+	 *
+	 * @return elapsed time
+	 */
 	@Override
 	public String toString() {
 		final var out = out();
@@ -35,8 +40,7 @@ public class ElapseTimer {
 	public boolean equals(final Object object) {
 		if(this == object) {
 			return true;
-		}
-		if(object != null && object instanceof ElapseTimer) {
+		} else if(object != null && object instanceof ElapseTimer) {
 			final var that = (ElapseTimer) object;
 			return start == that.start;
 		} else {

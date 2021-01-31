@@ -3,7 +3,6 @@ package com.xarql.util;
 /**
  * Holds a Java object
  *
- * @author Bryan Johnson
  * @param <T> Type of object to hold
  */
 public final class Wrapper<T> {
@@ -12,7 +11,7 @@ public final class Wrapper<T> {
 
 	/**
 	 * Constructs with given inputs
-	 * 
+	 *
 	 * @param object to be wrapped
 	 */
 	public Wrapper(final T object) {

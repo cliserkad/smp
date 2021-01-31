@@ -67,7 +67,7 @@ public class StringList extends BestList<String> {
 	/**
 	 * Like findNearest, but doesn't truncate the strings in this list to match the
 	 * length of the input
-	 * 
+	 *
 	 * @see StringList#findNearest(String)
 	 * @param target what to look for
 	 * @return String w/ lowest Levenshtein distance

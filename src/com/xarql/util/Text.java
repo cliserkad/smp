@@ -5,11 +5,31 @@ public class Text {
 	public static final char[] PUNCTUATION_MARKS = { ':', '.', ',', ';', '?', '!', '"', '\'' };
 	public static final char[] ESCAPE_CHARS = { '\n', '\t', '\r', '\f' }; // newline, tab, return, feed
 
+	/** Start of standard ASCII typeable characters (inclusive) */
+	public static final char START_OF_TYPEABLE = 32;
+	/** End of standard ASCII typeable characters (exclusive) */
+	public static final char END_OF_TYPEABLE = 127;
+	/** Start of ASCII digits (inclusive) */
+	public static final char START_OF_DIGITS = 48;
+	/** End of ASCII digits (exclusive) */
+	public static final char END_OF_DIGITS = 58;
+	/** Start of ASCII Capitols (inclusive) */
+	public static final char START_OF_CAPITOLS = 65;
+	/** End of ASCII Capitols (exclusive) */
+	public static final char END_OF_CAPITOLS = 91;
+	/** Start of ASCII lowercase (inclusive) */
+	public static final char START_OF_LOWERCASE = 97;
+	/** End of ASCII lowercase (exclusive) */
+	public static final char END_OF_LOWERCASE = 123;
+
+	public static final int AMOUNT_OF_LETTERS = 26;
+	public static final int AMOUNT_OF_DIGITS = 10;
+
 	/**
 	 * Determines if a character is in the range a-z
 	 */
 	public static boolean a_z(final char c) {
-		return c > 96 && c < 123;
+		return c >= START_OF_LOWERCASE && c < END_OF_LOWERCASE;
 	}
 
 	/**
@@ -28,7 +48,7 @@ public class Text {
 	 * Determines if a character is in the range A-Z
 	 */
 	public static boolean A_Z(final char c) {
-		return c > 64 && c < 91;
+		return c >= START_OF_CAPITOLS && c < END_OF_CAPITOLS;
 	}
 
 	/**
@@ -47,7 +67,7 @@ public class Text {
 	 * Determines if a character is a standard typable character
 	 */
 	public static boolean isTypable(final char c) {
-		return c > 31 && c < 127;
+		return c >= START_OF_TYPEABLE && c < END_OF_TYPEABLE;
 	}
 
 	/**
@@ -87,7 +107,7 @@ public class Text {
 	 * character is part of extended ASCII.
 	 */
 	public static boolean isAsciiExtended(final char c) {
-		return c < 256;
+		return c <= Byte.MAX_VALUE;
 	}
 
 	/**
@@ -171,7 +191,7 @@ public class Text {
 	}
 
 	public static String larger(final String preferred, final String other) {
-		if((other == null) || !(other.length() > preferred.length())) {
+		if(other == null || other.length() <= preferred.length()) {
 			return preferred;
 		} else {
 			return other;
@@ -205,7 +225,7 @@ public class Text {
 	}
 
 	public static String smaller(final String preferred, final String other) {
-		if((other == null) || !(other.length() < preferred.length())) {
+		if(other == null || other.length() >= preferred.length()) {
 			return preferred;
 		} else {
 			return other;

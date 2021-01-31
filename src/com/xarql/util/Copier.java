@@ -13,7 +13,7 @@ public interface Copier<Type> {
 	/**
 	 * Tests if <code>copy</code> is equal in value but not reference. Specifically,
 	 * <code>original != copy &amp;&amp; original.equals(copy)</code>.
-	 * 
+	 *
 	 * @param original Parent object
 	 * @param copy     Child object
 	 * @return <code>true</code> if <code>copy</code> is a proper copy of
@@ -50,7 +50,7 @@ public interface Copier<Type> {
 	/**
 	 * Creates a <code>Copy</code> container which holds an actual copy of the
 	 * object this method was called on.
-	 * 
+	 *
 	 * @return a <code>Copy</code>
 	 */
 	Copy<Type> copy();
@@ -58,14 +58,14 @@ public interface Copier<Type> {
 	/**
 	 * Provides access to the object that is implementing Copies. Should be defined
 	 * as <code>return this;</code>.
-	 * 
+	 *
 	 * @return Implementation
 	 */
 	Type self();
 
 	/**
 	 * Container class that holds the data from <code>Copies.copy()</code>.
-	 * 
+	 *
 	 * @author Bryan Johnson
 	 * @param <Type> The contained Type
 	 */
@@ -79,7 +79,7 @@ public interface Copier<Type> {
 		/**
 		 * Ensures each <code>copy</code> is a proper copy. Uses checkCopy to determine
 		 * when to throw an error.
-		 * 
+		 *
 		 * @param original Parent object
 		 * @param copy     Child object
 		 * @throws IllegalStateException when the Copy fails checkClone()
@@ -93,7 +93,7 @@ public interface Copier<Type> {
 
 		/**
 		 * Pass <code>toString()</code> call to underlying object <code>data</code>.
-		 * 
+		 *
 		 * @return <code>data.toString();</code>
 		 */
 		@Override
@@ -103,7 +103,7 @@ public interface Copier<Type> {
 
 		/**
 		 * Pass <code>equals()</code> call to underlying object <code>data</code>.
-		 * 
+		 *
 		 * @return <code>data.equals(o);</code>
 		 */
 		@Override

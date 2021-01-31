@@ -40,7 +40,7 @@ public final class Range implements Copier<Range> {
 
 	/**
 	 * Inclusive contains
-	 * 
+	 *
 	 * @param n A number
 	 * @return if n is in range
 	 */
