@@ -12,12 +12,15 @@ import static com.xarql.util.Text.START_OF_LOWERCASE;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Converts numbers to strings and vice versa. Supports bases of 2 to 64. Final
  * strings are probably non-standard and unusable in other programs, but the
  * layout is closer to ASCII than standard. It performs quite well, the test
- * runs in 1800 milliseconds on a Ryzen 5800x
+ * runs in 23 milliseconds on a Ryzen 5800x
  */
 public class BaseConverter {
 
@@ -35,12 +38,31 @@ public class BaseConverter {
 		System.out.println("Checking conversions...");
 		// checks that converting back and forth is non volatile in every supported base
 		final var et = new ElapseTimer();
+		final ExecutorService threadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 		for(var a = 2; a <= MAX_SUPPORTED_BASE; a++) {
-			for(var b = 0; b < pow(2, 16); b++) {
-				assert to(b, a).equals(to(from(to(b, a), a), a));
-			}
+			final int base = a;
+			threadPool.execute(() -> {
+				for(var bits = 1; bits <= Long.SIZE; bits++) {
+					final long max;
+					if(bits == 64)
+						max = Long.MAX_VALUE;
+					else
+						max = pow(2, bits) + 256;
+					for(long num = max - 256; num < max; num++) {
+						assert num == toNumber(toString(num, base), base); // convert the number to a string, then back to a number
+					}
+				}
+				System.out.println("Tested base " + base + "...");
+			});
 		}
-
+		threadPool.shutdown();
+		try {
+			if(!threadPool.awaitTermination(10, TimeUnit.MINUTES))
+				System.err.println("thread pool took too long to terminate");
+		} catch(InterruptedException e) {
+			System.err.println("thread pool was interrupted");
+			e.printStackTrace();
+		}
 		System.out.println("yay! we checked that all in " + et.toString());
 	}
 
@@ -57,11 +79,11 @@ public class BaseConverter {
 	 * @param input String representing a base 64 number
 	 * @return A long equal to the input
 	 */
-	public static long from(final String input) {
-		return from(input, MAX_SUPPORTED_BASE);
+	public static long toNumber(final String input) {
+		return toNumber(input, MAX_SUPPORTED_BASE);
 	}
 
-	public static long from(final String input, final int base) {
+	public static long toNumber(final String input, final int base) {
 		checkBase(base);
 		var output = 0L;
 		for(var i = 0; i < input.length(); i++) {
@@ -119,9 +141,9 @@ public class BaseConverter {
 		return charValues;
 	}
 
-	public static String to(long input, final int base) {
+	public static String toString(long input, final int base) {
 		checkBase(base);
-		var output = "";
+		final StringBuilder output = new StringBuilder();
 		final var digits = new ArrayList<Integer>();
 		do {
 			digits.add((int) input % base);
@@ -129,9 +151,9 @@ public class BaseConverter {
 		} while(input > 0);
 
 		for(var i = digits.size() - 1; i >= 0; i--) {
-			output += getCharValues().get(digits.get(i));
+			output.append(getCharValues().get(digits.get(i)));
 		}
-		return output;
+		return output.toString();
 	}
 
 	/**
@@ -141,8 +163,8 @@ public class BaseConverter {
 	 * @param input any long
 	 * @return A String equal to the input
 	 */
-	public static String to(final long input) {
-		return to(input, MAX_SUPPORTED_BASE);
+	public static String toString(final long input) {
+		return toString(input, MAX_SUPPORTED_BASE);
 	}
 
 }
