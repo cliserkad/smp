@@ -152,6 +152,18 @@ public class Text {
 		return true;
 	}
 
+	public static boolean isAlphaNumeric(final String in) {
+		for(var i = 0; i < in.length(); i++) {
+			if(!a_z(in.charAt(i)) || !A_Z(in.charAt(i)) || !isDigit(in.charAt(i)))
+				return false;
+		}
+		return true;
+	}
+
+	private static boolean isDigit(char c) {
+		return c >= START_OF_DIGITS && c < END_OF_DIGITS;
+	}
+
 	public static boolean isEmpty(final String s) {
 		return s == null || s.length() == 0;
 	}
