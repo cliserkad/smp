@@ -1,14 +1,5 @@
 package com.xarql.util;
 
-import static com.xarql.util.Math.pow;
-import static com.xarql.util.Text.AMOUNT_OF_DIGITS;
-import static com.xarql.util.Text.AMOUNT_OF_LETTERS;
-import static com.xarql.util.Text.END_OF_CAPITOLS;
-import static com.xarql.util.Text.END_OF_DIGITS;
-import static com.xarql.util.Text.END_OF_LOWERCASE;
-import static com.xarql.util.Text.START_OF_CAPITOLS;
-import static com.xarql.util.Text.START_OF_DIGITS;
-import static com.xarql.util.Text.START_OF_LOWERCASE;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,11 +7,14 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import static com.xarql.util.Math.pow;
+import static com.xarql.util.Text.*;
+
 /**
  * Converts numbers to strings and vice versa. Supports bases of 2 to 64. Final
  * strings are probably non-standard and unusable in other programs, but the
- * layout is closer to ASCII than standard. It performs quite well, the test
- * runs in 23 milliseconds on a Ryzen 5800x
+ * layout is closer to ASCII than standard. Runs in <100 milliseconds on an
+ * Apple M1 Pro.
  */
 public class BaseConverter {
 
@@ -42,16 +36,21 @@ public class BaseConverter {
 		for(var a = 2; a <= MAX_SUPPORTED_BASE; a++) {
 			final int base = a;
 			threadPool.execute(() -> {
-				for(var bits = 1; bits <= Long.SIZE; bits++) {
-					final long max;
-					if(bits == 64)
-						max = Long.MAX_VALUE;
-					else
-						max = pow(2, bits) + 256;
-					for(long num = max - 256; num < max; num++) {
-						assert num == toNumber(toString(num, base), base); // convert the number to a string, then back to a number
+				// test the highest 1024 numbers in the supported range
+				final int max = Integer.MAX_VALUE;
+				for (int num = max - 1024; num < max; num++) {
+					if (num != toNumber(toString(num, base), base)) { // convert the number to a string, then back to a number
+						System.err.println("Failed to convert " + num + " to base " + base + " and back again.");
 					}
 				}
+
+				// test the lowest 1024 numbers in the supported range
+				for (int num = 0; num < 1024; num++) {
+					if (num != toNumber(toString(num, base), base)) { // convert the number to a string, then back to a number
+						System.err.println("Failed to convert " + num + " to base " + base + " and back again.");
+					}
+				}
+
 				System.out.println("Tested base " + base + "...");
 			});
 		}
@@ -63,7 +62,7 @@ public class BaseConverter {
 			System.err.println("thread pool was interrupted");
 			e.printStackTrace();
 		}
-		System.out.println("yay! we checked that all in " + et.toString());
+		System.out.println("yay! we checked that all in " + et);
 	}
 
 	public static void checkBase(final int base) {
@@ -77,22 +76,32 @@ public class BaseConverter {
 	 * (represented as an int). Example: E5; 873
 	 *
 	 * @param input String representing a base 64 number
-	 * @return A long equal to the input
+	 * @return An int equal to the input
 	 */
-	public static long toNumber(final String input) {
+	public static int toNumber(final String input) {
 		return toNumber(input, MAX_SUPPORTED_BASE);
 	}
 
-	public static long toNumber(final String input, final int base) {
+	/**
+	 * Converts a String representing a number in the specified base to an int.
+	 * Can convert from Binary, Octal, Hex, or even Base64.
+	 * For use in conjunction with toString to convert numbers back and forth.
+	 *
+	 * @param input String representing a number
+	 * @param base  base of number in input; [0, 64]
+	 * @return An int
+	 * @see BaseConverter#toString(int, int)
+	 */
+	public static int toNumber(final String input, final int base) {
 		checkBase(base);
-		var output = 0L;
-		for(var i = 0; i < input.length(); i++) {
+		var output = 0;
+		for (var i = 0; i < input.length(); i++) {
 			int charValue;
-			if(input.charAt(i) >= START_OF_DIGITS && input.charAt(i) < END_OF_DIGITS) {
+			if (input.charAt(i) >= START_OF_DIGITS && input.charAt(i) < END_OF_DIGITS) {
 				charValue = input.charAt(i) - FIRST_RUN_OFFSET;
-			} else if(input.charAt(i) >= START_OF_CAPITOLS && input.charAt(i) < END_OF_CAPITOLS) {
+			} else if (input.charAt(i) >= START_OF_CAPITOLS && input.charAt(i) < END_OF_CAPITOLS) {
 				charValue = input.charAt(i) - SECOND_RUN_OFFSET;
-			} else if(input.charAt(i) >= START_OF_LOWERCASE && input.charAt(i) < END_OF_LOWERCASE) {
+			} else if (input.charAt(i) >= START_OF_LOWERCASE && input.charAt(i) < END_OF_LOWERCASE) {
 				charValue = input.charAt(i) - THIRD_RUN_OFFSET;
 			} else if(input.charAt(i) == '-') {
 				charValue = 62;
@@ -108,8 +117,7 @@ public class BaseConverter {
 	}
 
 	/**
-	 * Constructs the Map the holds the values for each valid char in a base 64
-	 * number String
+	 * Constructs the Map that holds the values for each valid char in a Base64 number String
 	 */
 	private static void buildCharacterMap() {
 		final var builtValues = new HashMap<Integer, Character>();
@@ -135,35 +143,43 @@ public class BaseConverter {
 	 * @return built charValues
 	 */
 	public static Map<Integer, Character> getCharValues() {
-		if(charValues.isEmpty()) {
+		if (charValues.isEmpty()) {
 			buildCharacterMap();
 		}
 		return charValues;
 	}
 
-	public static String toString(long input, final int base) {
+	/**
+	 * Converts an input number to a string of the desired base.
+	 * Can convert to Binary, Octal, Hex, or even Base64.
+	 *
+	 * @param input any int >= 0
+	 * @param base  [2, 64]
+	 * @return A String representing the input in the requested base
+	 */
+	public static String toString(int input, final int base) {
 		checkBase(base);
 		final StringBuilder output = new StringBuilder();
 		final var digits = new ArrayList<Integer>();
 		do {
-			digits.add((int) input % base);
+			digits.add(input % base);
 			input = (input - input % base) / base;
-		} while(input > 0);
+		} while (input > 0);
 
-		for(var i = digits.size() - 1; i >= 0; i--) {
+		for (var i = digits.size() - 1; i >= 0; i--) {
 			output.append(getCharValues().get(digits.get(i)));
 		}
 		return output.toString();
 	}
 
 	/**
-	 * Converts a base 10 number (represented as an long) to a base 64 number
+	 * Converts a base 10 number (represented as an int) to a Base64 number
 	 * (represented as an String). Example: 873; E5
 	 *
-	 * @param input any long
+	 * @param input any int >= 0
 	 * @return A String equal to the input
 	 */
-	public static String toString(final long input) {
+	public static String toString(final int input) {
 		return toString(input, MAX_SUPPORTED_BASE);
 	}
 
