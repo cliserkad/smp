@@ -3,6 +3,8 @@ package com.xarql.util;
 import java.util.concurrent.RecursiveTask;
 
 public class MergeSort extends RecursiveTask<int[]> {
+	public static final int INSERTION_SORT_THRESHOLD = 256;
+
 	int[] array;
 
 	public MergeSort(int[] array) {
@@ -33,55 +35,52 @@ public class MergeSort extends RecursiveTask<int[]> {
 		}
 	}
 
+	public static int[] insertionSort(int[] array) {
+		for(int a = 1; a < array.length; ++a) {
+			// key to test targets against
+			int key = array[a];
+			// index to target for insertion
+			int target = a - 1;
+
+            /* Move elements of array[0..i-1], that are
+               greater than key, to one position ahead
+               of their current position */
+			while(target >= 0 && array[target] > key) {
+				array[target + 1] = array[target];
+				target--;
+			}
+			array[target + 1] = key;
+		}
+		return array;
+	}
+
 	@Override
 	protected int[] compute() {
+		// when the array is too small, creating threads isn't worth the overhead
+		// this also serves as the base sorting algorithm, instead of a simple 2 element swap
+		if(array.length < INSERTION_SORT_THRESHOLD) {
+			return insertionSort(array);
+		}
+
 		int mid = array.length / 2;
 
+		// numbers to the left of the mid point
 		int[] leftPart = new int[mid];
-		MergeSort leftSorter = null;
 		System.arraycopy(array, 0, leftPart, 0, mid);
-		// only sort if array has more than 1 element
-		if(leftPart.length > 1) {
-			// if array length is 2
-			if(leftPart.length == 2) {
-				// if indexes 1 & 2 are not sorted
-				if(leftPart[0] > leftPart[1]) {
-					// swap indexes 1 & 2
-					int tmp = leftPart[0];
-					leftPart[0] = leftPart[1];
-					leftPart[1] = tmp;
-				}
-			} else {
-				leftSorter = new MergeSort(leftPart);
-			}
-		}
+		MergeSort leftSorter = new MergeSort(leftPart);
 
+		// numbers to the right of the mid point
 		int[] rightPart = new int[array.length - mid];
-		MergeSort rightSorter = null;
 		System.arraycopy(array, mid, rightPart, 0, array.length - mid);
-		// only sort if array has more than 1 element
-		if(rightPart.length > 1) {
-			// if array length is 2
-			if(rightPart.length == 2) {
-				// if indexes 1 & 2 are not sorted
-				if(rightPart[0] > rightPart[1]) {
-					// swap indexes 1 & 2
-					int tmp = rightPart[0];
-					rightPart[0] = rightPart[1];
-					rightPart[1] = tmp;
-				}
-			} else {
-				rightSorter = new MergeSort(rightPart);
-			}
-		}
+		MergeSort rightSorter = new MergeSort(rightPart);
 
-		// run threads
-		if(leftSorter != null) leftSorter.fork();
-		if(rightSorter != null) rightSorter.fork();
+		// dispatch threads
+		leftSorter.fork();
+		rightSorter.fork();
 
 		// wait for thread completion
-		if(leftSorter != null) leftPart = leftSorter.join();
-		if(rightSorter != null) rightPart = rightSorter.join();
+		leftPart = leftSorter.join();
+		rightPart = rightSorter.join();
 
 		merge(array, leftPart, rightPart);
 
