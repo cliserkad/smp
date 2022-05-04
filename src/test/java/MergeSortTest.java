@@ -1,7 +1,7 @@
 package test.java;
 
 import com.xarql.util.ElapseTimer;
-import com.xarql.util.ThreadedMergeSort;
+import com.xarql.util.MergeSort;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -9,7 +9,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class ThreadedMergeSortTest {
+public class MergeSortTest {
 
 	// sort 10 million numbers
 	@Test
@@ -28,7 +28,7 @@ public class ThreadedMergeSortTest {
 		System.out.println("Time taken for java " + (time / 1000000));
 
 		t = new ElapseTimer();
-		ThreadedMergeSort.mergeSort(randomized);
+		MergeSort.sort(randomized);
 		time = t.out();
 		System.out.println("Time taken for me " + (time / 1000000));
 
