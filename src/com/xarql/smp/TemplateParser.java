@@ -22,7 +22,7 @@ public class TemplateParser {
 	}
 
 	public static <Template> Template parse(final String smp, final Class<Template> template) throws BadTemplateException, UnsafeException {
-		Template out = null;
+		Template out;
 		final var data = GenericParser.parse(smp);
 		try {
 			out = template.getDeclaredConstructor().newInstance();
@@ -58,7 +58,7 @@ public class TemplateParser {
 		}
 		return out;
 	}
-	
+
 	private static Unsafe unsafeHack() throws UnsafeException {
 		try {
 			final var instance = Unsafe.class.getDeclaredField("theUnsafe");

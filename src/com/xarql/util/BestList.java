@@ -67,11 +67,11 @@ public class BestList<E> extends ArrayList<E> {
 	 * @return combined toString()
 	 */
 	public String spread() {
-		var out = "";
+		StringBuilder out = new StringBuilder();
 		for(final E elm : this) {
-			out += elm.toString().replace("\n", "") + "\n";
+			out.append(elm.toString().replace("\n", "")).append("\n");
 		}
-		return out;
+		return out.toString();
 	}
 
 	/**
@@ -90,11 +90,11 @@ public class BestList<E> extends ArrayList<E> {
 
 	@Override
 	public String toString() {
-		var out = "";
+		StringBuilder out = new StringBuilder();
 		for(final E elm : this) {
-			out += elm.toString().replace(",", "") + ",";
+			out.append(elm.toString().replace(",", "")).append(",");
 		}
-		return out;
+		return out.toString();
 	}
 
 	public static <E> BestList<E> nonNullList(final List<E> in) {
