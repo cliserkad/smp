@@ -30,8 +30,8 @@ public class BaseConverterTest {
         for (var a = 2; a <= BaseConverter.MAX_SUPPORTED_BASE; a++) {
             final int base = a;
             threadPool.execute(() -> {
-                // test the lowest 1024 numbers in the supported range
-                for (int num = 0; num < 1024; num++) {
+                // test the highest 1024 numbers in the supported range
+                for(int num = Integer.MAX_VALUE; num > Integer.MAX_VALUE - 1024; num--) {
                     assertEquals(num, BaseConverter.toNumber(BaseConverter.toString(num, base), base));
                 }
             });
