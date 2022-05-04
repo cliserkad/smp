@@ -40,8 +40,7 @@ public class ElapseTimer {
 	public boolean equals(final Object object) {
 		if(this == object) {
 			return true;
-		} else if(object != null && object instanceof ElapseTimer) {
-			final var that = (ElapseTimer) object;
+		} else if(object instanceof final ElapseTimer that) {
 			return start == that.start;
 		} else {
 			return false;

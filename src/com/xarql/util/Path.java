@@ -77,8 +77,7 @@ public class Path implements Serializable {
 	public boolean equals(final Object o) {
 		if(this == o) {
 			return true;
-		} else if(o instanceof Path) {
-			final var that = (Path) o;
+		} else if(o instanceof final Path that) {
 			return Arrays.equals(getParts(), that.getParts());
 		} else if(o instanceof String) {
 			final var that = new Path((String) o);

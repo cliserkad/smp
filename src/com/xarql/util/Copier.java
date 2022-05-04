@@ -106,6 +106,7 @@ public interface Copier<Type> {
 		 *
 		 * @return <code>data.equals(o);</code>
 		 */
+		@SuppressWarnings("EqualsWhichDoesntCheckParameterClass") // This method is generic & the underlying object checks the type
 		@Override
 		public boolean equals(final Object o) {
 			return data.equals(o);

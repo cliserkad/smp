@@ -5,8 +5,9 @@ import com.xarql.util.Path;
 import sun.misc.Unsafe;
 
 /**
- * Attempts to instantiate a template and fill it with the values from an smp
- * String
+ * Attempts to instantiate a template and fill it with the values from smp
+ * TODO: Rewrite to reduce unsafe usage
+ * TODO: Support complex / nested objects
  */
 @SuppressWarnings("unchecked")
 public class TemplateParser {
@@ -21,7 +22,7 @@ public class TemplateParser {
 	}
 
 	public static <Template> Template parse(final String smp, final Class<Template> template) throws BadTemplateException, UnsafeException {
-		Template out = null;
+		Template out;
 		final var data = GenericParser.parse(smp);
 		try {
 			out = template.getDeclaredConstructor().newInstance();

@@ -303,8 +303,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 
 	@Override
 	public boolean equals(final Object o) {
-		if(o instanceof TrackedMap<?, ?>) {
-			final TrackedMap<?, ?> map = (TrackedMap<?, ?>) o;
+		if(o instanceof final TrackedMap<?, ?> map) {
 			return equals(map);
 		} else {
 			return false;

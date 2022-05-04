@@ -45,8 +45,7 @@ public final class Vector2i implements Copier<Vector2i> {
 	public boolean equals(final Object o) {
 		if(o == this) {
 			return true;
-		} else if(o instanceof Vector2i) {
-			final var p = (Vector2i) o;
+		} else if(o instanceof final Vector2i p) {
 			return p.x == x && p.y == y;
 		} else {
 			return false;

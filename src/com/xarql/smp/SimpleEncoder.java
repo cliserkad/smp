@@ -38,7 +38,7 @@ public class SimpleEncoder {
 		} else if(obj.getClass() == Character.class) {
 			output.append(CHAR_QUOTE).append(filterChar((char) obj)).append(CHAR_QUOTE);
 		} else if(isBasic(obj.getClass())) {
-			output.append(obj.toString());
+			output.append(obj);
 		} else if(obj.getClass().isArray() || obj instanceof Iterable<?>) {
 			output.append(LIST_START);
 			if(obj.getClass().isArray()) {
