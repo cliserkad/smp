@@ -20,7 +20,7 @@ public class SyntaxErrorHandler extends BaseErrorListener {
 	}
 
 	public ExceptionPack pack() {
-		return new ExceptionPack((Exception[]) errors.toArray());
+		return new ExceptionPack(errors.toArray(new Exception[0]));
 	}
 
 	@Override
