@@ -1,7 +1,10 @@
 package com.xarql.util;
 
+import java.io.Serial;
+
 public class StringList extends BestList<String> {
 
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public StringList(final String... strings) {

@@ -5,8 +5,9 @@ import com.xarql.util.Path;
 import sun.misc.Unsafe;
 
 /**
- * Attempts to instantiate a template and fill it with the values from an smp
- * String
+ * Attempts to instantiate a template and fill it with the values from smp
+ * TODO: Rewrite to reduce unsafe usage
+ * TODO: Support complex / nested objects
  */
 @SuppressWarnings("unchecked")
 public class TemplateParser {
@@ -57,7 +58,7 @@ public class TemplateParser {
 		}
 		return out;
 	}
-
+	
 	private static Unsafe unsafeHack() throws UnsafeException {
 		try {
 			final var instance = Unsafe.class.getDeclaredField("theUnsafe");

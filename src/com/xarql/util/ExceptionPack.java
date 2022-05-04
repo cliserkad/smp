@@ -1,12 +1,11 @@
 package com.xarql.util;
 
+import java.io.Serial;
 import java.util.List;
 
 public class ExceptionPack extends Exception {
 
-	/**
-	 *
-	 */
+	@Serial
 	private static final long serialVersionUID = 1939447964468120636L;
 
 	public static final String NO_MSG = "No message provided";
