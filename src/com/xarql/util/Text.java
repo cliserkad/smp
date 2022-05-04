@@ -125,7 +125,7 @@ public class Text {
 	/**
 	 * Only allow a-z and A-Z
 	 *
-	 * @param word
+	 * @param word input word
 	 * @return true if all chars are in the latin alphabet
 	 */
 	public static boolean isLatinWord(final String word) {

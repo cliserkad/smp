@@ -5,7 +5,7 @@ import java.util.concurrent.RecursiveTask;
 public class MergeSort extends RecursiveTask<int[]> {
 	public static final int INSERTION_SORT_THRESHOLD = 256;
 
-	int[] array;
+	private final int[] array;
 
 	public MergeSort(int[] array) {
 		this.array = array;

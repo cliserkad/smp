@@ -74,7 +74,7 @@ public class GenericParser {
 						currentPath = currentPath.append(builder.toString());
 						builder.setLength(0);
 					} else if(smp.charAt(a) == SEPARATOR || smp.charAt(a) == LIST_END) {
-						out.putAll(parse(currentPath.delete(), currentPath.last() + ":" + builder.toString() + ";"));
+						out.putAll(parse(currentPath.delete(), currentPath.last() + ":" + builder + ";"));
 						builder.setLength(0);
 						final var depth = Integer.parseInt(currentPath.last());
 						currentPath = currentPath.delete().append(depth + 1 + "");

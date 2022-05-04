@@ -92,10 +92,9 @@ public final class Range implements Copier<Range> {
 
 	@Override
 	public boolean equals(final Object o) {
-		if(!(o instanceof Range)) {
+		if(!(o instanceof final Range r)) {
 			return false;
 		} else {
-			final var r = (Range) o;
 			return r.start == start && r.end == end;
 		}
 	}

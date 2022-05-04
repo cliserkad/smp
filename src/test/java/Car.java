@@ -24,8 +24,7 @@ public class Car {
 			return false;
 		} else if(obj == this) {
 			return true;
-		} else if(obj instanceof Car) {
-			final var other = (Car) obj;
+		} else if(obj instanceof final Car other) {
 			return other.year == year && other.model.equals(model) && other.engine.equals(engine) && other.type == type && Arrays.equals(other.driveModes, driveModes);
 		} else {
 			return false;
