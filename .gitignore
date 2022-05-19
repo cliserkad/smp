@@ -15,3 +15,6 @@
 *.prefs
 *.project
 *.classpath
+
+# Annoying macOS bullshit
+**.DS_Store
