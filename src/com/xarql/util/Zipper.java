@@ -2,10 +2,7 @@
 // No infringement intended
 package com.xarql.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -15,12 +12,15 @@ public class Zipper {
 	public static final int BUFFER_MULTIPLIER = 2;
 	public static final String ZIP_EXTENSION = ".zip";
 
-	public static void zip(final File input) throws IOException {
-		try(var fos = new FileOutputStream(input + ZIP_EXTENSION); var zipOut = new ZipOutputStream(fos)) {
+	public static File zip(final File input) throws IOException {
+		return zip(input, new File(input.getParentFile(), input.getName() + ZIP_EXTENSION));
+	}
+
+	public static File zip(final File input, final File output) throws IOException {
+		try(var fos = new FileOutputStream(output); var zipOut = new ZipOutputStream(fos)) {
 			zipFile(input, input.getName(), zipOut);
-		} catch(final IOException e) {
-			throw e;
 		}
+		return output;
 	}
 
 	private static void zipFile(final File fileToZip, final String fileName, final ZipOutputStream zipOut) throws IOException {
