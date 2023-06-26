@@ -3,7 +3,7 @@
     <groupId>com.xarql</groupId>
     <artifactId>smp</artifactId>
     <packaging>jar</packaging>
-    <version>0.15</version>
+    <version>0.16</version>
     <name>Simple Data Format</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
