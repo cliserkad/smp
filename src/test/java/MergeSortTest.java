@@ -10,15 +10,15 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class MergeSortTest {
 
-	// sort 10 million numbers
+	// sort a bunch of numbers. Should work on other Comparables too
 	@Test
 	public void testArray() {
 		Random r = new Random();
-		int[] randomized = new int[32767];
+		Integer[] randomized = new Integer[32768];
 		for(int i = 0; i < randomized.length; i++) {
-			randomized[i] = r.nextInt(32767);
+			randomized[i] = r.nextInt(randomized.length);
 		}
-		int[] sorted = new int[randomized.length];
+		Integer[] sorted = new Integer[randomized.length];
 		System.arraycopy(randomized, 0, sorted, 0, randomized.length);
 
 		Arrays.sort(sorted);
@@ -26,7 +26,5 @@ public class MergeSortTest {
 
 		assertArrayEquals(randomized, sorted);
 	}
-
-
 
 }
