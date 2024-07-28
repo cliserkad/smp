@@ -2,7 +2,7 @@ package com.xarql.util;
 
 import java.util.concurrent.RecursiveTask;
 
-/* black magic that already has a standard library implementation */
+/** Threaded Merge Sort */
 public class MergeSort<T> extends RecursiveTask<Comparable<T>[]> {
 	public static final int INSERTION_SORT_THRESHOLD = 256;
 
@@ -12,12 +12,17 @@ public class MergeSort<T> extends RecursiveTask<Comparable<T>[]> {
 		this.array = array;
 	}
 
+	/**
+	 * Sorts an array of Comparable using a Threaded Merge Sort
+	 *
+	 * @param array The array to sort
+	 * @return The sorted array
+	 */
 	public static <T> Comparable<T>[] sort(Comparable<T>[] array) {
-		MergeSort<T> sorter = new MergeSort<>(array);
-		return sorter.compute();
+		return new MergeSort<>(array).compute();
 	}
 
-	public static <T> void merge(Comparable<T>[] source, Comparable<T>[] leftPart, Comparable<T>[] rightPart) {
+	private static <T> void merge(Comparable<T>[] source, Comparable<T>[] leftPart, Comparable<T>[] rightPart) {
 		int leftIndex = 0;
 		int rightIndex = 0;
 		int sourceIndex = 0;
@@ -36,6 +41,11 @@ public class MergeSort<T> extends RecursiveTask<Comparable<T>[]> {
 		}
 	}
 
+	/**
+	 * Sorts an array of Comparable using an Insertion Sort
+	 * @param array The array to sort
+	 * @return The sorted array
+	 */
 	public static <T> Comparable<T>[] insertionSort(Comparable<T>[] array) {
 		for(int keyIndex = 1; keyIndex < array.length; ++keyIndex) {
 			// key to test targets against

@@ -7,7 +7,14 @@ public class ElapseTimer {
 	public static final long NANO_PER_MILLI = 1000000;
 	public static final long NANO_PER_SEC = NANO_PER_MILLI * 1000;
 
-	final public long start = System.nanoTime();
+	public final long start;
+
+	/**
+	 * Creates a record of the current system time in nanoseconds
+	 */
+	public ElapseTimer() {
+		start = System.nanoTime();
+	}
 
 	/**
 	 * Provides the typically desired output, which is the difference in nanoseconds
