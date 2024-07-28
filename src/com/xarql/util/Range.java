@@ -2,19 +2,21 @@ package com.xarql.util;
 
 import static com.xarql.util.Math.max;
 import static com.xarql.util.Math.min;
+
+import java.util.Iterator;
 import java.util.Random;
 
 /**
- * Represents a range. The range is inclusive for its start but exclusive for its end
+ * Represents a range. The range is inclusive for its minimum but exclusive for its maximum.
  */
-public final class Range implements Copier<Range> {
+public final class Range implements Copier<Range>, Iterable<Integer> {
 
-	public final int start;
-	public final int end;
+	public final int min;
+	public final int max;
 
-	public Range(final int point1, final int point2) {
-		start = min(point1, point2);
-		end = max(point1, point2);
+	public Range(final int min, final int max) {
+		this.min = min(min, max);
+		this.max = max(min, max);
 	}
 
 	public Range() {
@@ -26,19 +28,19 @@ public final class Range implements Copier<Range> {
 	}
 
 	public Range withBound(final int bound) {
-		return new Range(min(bound, start), max(bound, end));
+		return new Range(min(bound, min), max(bound, max));
 	}
 
-	public Range withStart(final int start) {
-		return new Range(min(start, end), max(start, end));
+	public Range withMin(final int min) {
+		return new Range(min(min, max), max(min, max));
 	}
 
-	public Range withFinish(final int finish) {
-		return new Range(min(start, finish), max(finish, start));
+	public Range withMax(final int max) {
+		return new Range(min(min, max), max(max, min));
 	}
 
 	public int size() {
-		return end - start;
+		return max - min;
 	}
 
 	/**
@@ -49,18 +51,18 @@ public final class Range implements Copier<Range> {
 	 * @return if n is in range
 	 */
 	public boolean has(final int n) {
-		return n >= start && n < end;
+		return n >= min && n < max;
 	}
 
 	public boolean isEmpty() {
-		return start == 0 && end == 0;
+		return min == 0 && max == 0;
 	}
 
 	public float constrain(final float n) {
-		if(n < start) {
-			return start;
-		} else if(n > end) {
-			return end;
+		if(n < min) {
+			return min;
+		} else if(n > max) {
+			return max;
 		} else {
 			return n;
 		}
@@ -68,26 +70,26 @@ public final class Range implements Copier<Range> {
 
 	public Range restrict(final Range r) {
 		var output = r.copy().data;
-		if(r.start < start) {
-			output = output.withStart(start);
+		if(r.min < min) {
+			output = output.withMin(min);
 		}
-		if(r.end > end) {
-			output = output.withFinish(end);
+		if(r.max > max) {
+			output = output.withMax(max);
 		}
 		return output;
 	}
 
 	public int random() {
 		if(size() == 0) {
-			return start;
+			return min;
 		} else {
-			return new Random().nextInt(size()) + start;
+			return new Random().nextInt(size()) + min;
 		}
 	}
 
 	@Override
 	public String toString() {
-		return "[" + start + ", " + end + "]";
+		return "[" + min + ", " + max + "]";
 	}
 
 	@Override
@@ -95,19 +97,36 @@ public final class Range implements Copier<Range> {
 		if(!(o instanceof final Range r)) {
 			return false;
 		} else {
-			return r.start == start && r.end == end;
+			return r.min == min && r.max == max;
 		}
 	}
 
 	@Override
 	public Copy<Range> copy() {
-		final var r = new Range(start, end);
+		final var r = new Range(min, max);
 		return new Copy<>(this, r);
 	}
 
 	@Override
 	public Range self() {
 		return this;
+	}
+
+	@Override
+	public Iterator<Integer> iterator() {
+		return new Iterator<>() {
+			private int currentIndex = min;
+
+			@Override
+			public boolean hasNext() {
+				return currentIndex < max;
+			}
+
+			@Override
+			public Integer next() {
+				return currentIndex++;
+			}
+		};
 	}
 
 }
