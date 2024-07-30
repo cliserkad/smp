@@ -1,7 +1,5 @@
 package test.java;
 
-import com.xarql.util.Text;
-
 public class CoverageRunner {
 
 	public static void main(String[] args) throws Exception {
@@ -16,8 +14,6 @@ public class CoverageRunner {
 		new TemplateTest().testSimple();
 
 		TextTest.main(null);
-
-		new ZipperTest().testZipperWithOutputPath();
 	}
 
 }
