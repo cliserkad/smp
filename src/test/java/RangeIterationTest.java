@@ -1,7 +1,7 @@
 package test.java;
 
-import com.xarql.util.Range;
 import org.junit.jupiter.api.Test;
+import xyz.cliserkad.util.Range;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

@@ -1,11 +1,12 @@
 package test.java;
 
-import static com.xarql.smp.GenericParser.parse;
-import static com.xarql.smp.SimpleEncoder.encode;
-import static com.xarql.smp.SimpleEncoder.prettyPrint;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
-import com.xarql.util.Path;
+import xyz.cliserkad.util.Path;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static xyz.cliserkad.smp.GenericParser.parse;
+import static xyz.cliserkad.smp.SimpleEncoder.encode;
+import static xyz.cliserkad.smp.SimpleEncoder.prettyPrint;
 
 public class NestedListTest {
 

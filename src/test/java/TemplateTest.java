@@ -1,11 +1,12 @@
 package test.java;
 
-import static com.xarql.smp.SimpleEncoder.encode;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
-import com.xarql.smp.BadTemplateException;
-import com.xarql.smp.TemplateParser;
-import com.xarql.smp.UnsafeException;
+import xyz.cliserkad.smp.BadTemplateException;
+import xyz.cliserkad.smp.TemplateParser;
+import xyz.cliserkad.smp.UnsafeException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static xyz.cliserkad.smp.SimpleEncoder.encode;
 
 public class TemplateTest {
 

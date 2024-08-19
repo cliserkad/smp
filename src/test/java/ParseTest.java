@@ -1,11 +1,13 @@
 package test.java;
 
-import static com.xarql.smp.GenericParser.parse;
-import static com.xarql.smp.SimpleEncoder.encode;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.util.Map;
 import org.junit.jupiter.api.Test;
-import com.xarql.util.Path;
+import xyz.cliserkad.util.Path;
+
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static xyz.cliserkad.smp.GenericParser.parse;
+import static xyz.cliserkad.smp.SimpleEncoder.encode;
 
 public class ParseTest {
 

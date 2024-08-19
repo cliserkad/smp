@@ -1,7 +1,7 @@
 package test.java;
 
-import com.xarql.util.MergeSort;
 import org.junit.jupiter.api.Test;
+import xyz.cliserkad.util.MergeSort;
 
 import java.util.Arrays;
 import java.util.Random;

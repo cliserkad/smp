@@ -1,9 +1,10 @@
 package test.java;
 
-import static com.xarql.smp.SimpleEncoder.encode;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
-import com.xarql.smp.Verifier;
+import xyz.cliserkad.smp.Verifier;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static xyz.cliserkad.smp.SimpleEncoder.encode;
 
 public class EncodeTest {
 

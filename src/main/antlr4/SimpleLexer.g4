@@ -1,7 +1,7 @@
 lexer grammar SimpleLexer;
 
 @header {
-  package com.xarql.smp.antlr;
+  package xyz.cliserkad.smp.antlr;
 }
 
 // skip over comments in lexer

@@ -1,11 +1,13 @@
 package test.java;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import org.junit.jupiter.api.Test;
+import xyz.cliserkad.smp.ParseUtil;
+import xyz.cliserkad.util.Path;
+
 import java.io.File;
 import java.util.Map;
-import org.junit.jupiter.api.Test;
-import com.xarql.smp.ParseUtil;
-import com.xarql.util.Path;
+
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class ParseUtilTest {
 

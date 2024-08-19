@@ -1,7 +1,7 @@
 parser grammar SimpleParser;
 
 @header {
-  package com.xarql.smp.antlr;
+  package xyz.cliserkad.smp.antlr;
 }
 
 options {

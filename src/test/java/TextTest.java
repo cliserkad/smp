@@ -1,7 +1,7 @@
 package test.java;
 
-import com.xarql.util.Text;
 import org.junit.jupiter.api.Test;
+import xyz.cliserkad.util.Text;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -47,6 +47,5 @@ public class TextTest {
 	public void testTypableInvalid() {
 		assertFalse(Text.isTypable("💩"));
 	}
-
 
 }
