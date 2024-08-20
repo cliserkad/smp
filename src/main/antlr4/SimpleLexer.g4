@@ -38,4 +38,7 @@ fragment LETTER     : UPLETTER | DNLETTER;
 fragment ALPHANUM   : LETTER | DIGIT;
 fragment UNDERSCORE : '_';
 CHAR_LIT: '\'' . '\'';
-KEYNAME : .+;
+
+// the specification says you can use any character that is not : but this is much more restrictive
+// this might be changed later to be more permissive, but eliminating more characters makes parsing less ambiguous
+KEY_FRAGMENT: ~[-+_:; \n\t\r{}[\],.\\/*'"];
