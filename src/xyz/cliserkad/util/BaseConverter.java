@@ -1,8 +1,6 @@
 package xyz.cliserkad.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +21,7 @@ public class BaseConverter {
 
 	public static final String UNSUPPORTED_BASE = " is not within " + MIN_SUPPORTED_BASE + " & " + MAX_SUPPORTED_BASE;
 
-	private static Map<Integer, Character> charValues = new HashMap<>();
+	private static final char[] charValues = characterArray();
 
 	public static void main(final String[] args) {
 		System.out.println("Checking conversions...");
@@ -69,9 +67,9 @@ public class BaseConverter {
 	}
 
 	/**
-	 * Converts a base 64 number (represented as a String) to a base 10 number (represented as an int). Example: E5; 873
+	 * Converts a Base64 String to an int.
 	 *
-	 * @param input String representing a base 64 number
+	 * @param input Base64 String
 	 * @return An int equal to the input
 	 */
 	public static int toNumber(final String input) {
@@ -79,10 +77,11 @@ public class BaseConverter {
 	}
 
 	/**
-	 * Converts a String representing a number in the specified base to an int. Can convert from Binary, Octal, Hex, or even Base64. For use in conjunction with toString to convert numbers back and forth.
+	 * Converts a String in the specified base to an int. Can convert from Binary, Octal, Hex, Base64.
+	 * For use in conjunction with toString to convert numbers back and forth.
 	 *
 	 * @param input String representing a number
-	 * @param base  base of number in input; [0, 64]
+	 * @param base  base of number in input; [2..64]
 	 * @return An int
 	 * @see BaseConverter#toString(int, int)
 	 */
@@ -111,10 +110,10 @@ public class BaseConverter {
 	}
 
 	/**
-	 * Constructs the Map that holds the values for each valid char in a Base64 number String
+	 * Constructs the array of valid chars for a Base64 number String
 	 */
-	private static void buildCharacterMap() {
-		final var builtValues = new HashMap<Integer, Character>();
+	private static char[] characterArray() {
+		final char[] builtValues = new char[MAX_SUPPORTED_BASE];
 		var i = 0;
 		int booster = START_OF_DIGITS;
 		while(i < MAX_SUPPORTED_BASE) {
@@ -127,27 +126,17 @@ public class BaseConverter {
 			} else if(i == 63) {
 				booster = '_' - 63;
 			}
-			builtValues.put(i, (char) (i + booster));
+			builtValues[i] = (char) (i + booster);
 			i++;
 		}
-		charValues = builtValues;
+		return builtValues;
 	}
 
 	/**
-	 * @return built charValues
-	 */
-	public static Map<Integer, Character> getCharValues() {
-		if(charValues.isEmpty()) {
-			buildCharacterMap();
-		}
-		return charValues;
-	}
-
-	/**
-	 * Converts an input number to a string of the desired base. Can convert to Binary, Octal, Hex, or even Base64.
+	 * Converts an int to a string of the desired base. Can convert to Binary, Octal, Hex, Base64.
 	 *
-	 * @param input any int >= 0
-	 * @param base  [2, 64]
+	 * @param input [1..2^31-1]
+	 * @param base  [2..64]
 	 * @return A String representing the input in the requested base
 	 */
 	public static String toString(int input, final int base) {
@@ -160,16 +149,16 @@ public class BaseConverter {
 		} while(input > 0);
 
 		for(var i = digits.size() - 1; i >= 0; i--) {
-			output.append(getCharValues().get(digits.get(i)));
+			output.append(charValues[digits.get(i)]);
 		}
 		return output.toString();
 	}
 
 	/**
-	 * Converts a base 10 number (represented as an int) to a Base64 number (represented as an String). Example: 873; E5
+	 * Converts an int to a Base64 String.
 	 *
-	 * @param input any int >= 0
-	 * @return A String equal to the input
+	 * @param input [1..2^31-1]
+	 * @return Base64 representation of input
 	 */
 	public static String toString(final int input) {
 		return toString(input, MAX_SUPPORTED_BASE);
