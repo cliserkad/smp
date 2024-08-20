@@ -59,20 +59,19 @@ public class Math {
 	}
 
 	/**
-	 * Custom "to the power of" method for determining exponential values. For whatever reason Math.pow() doesn't work properly for certain use cases. The output might suffer from an integer overflow if the arguments are too large.
+	 * Custom "to the power of" method for determining exponential values.
+	 * For whatever reason Math.pow() doesn't work properly for certain use cases.
+	 * The output might suffer from an integer overflow if the arguments are too large.
 	 *
-	 * @param number The base number
-	 * @param power  The exponent
-	 * @return number^power
+	 * @return base^exponent
 	 */
-	public static long pow(final int number, int power) {
-		if(power == 0 || number == 0) {
+	public static long pow(final int base, int exponent) {
+		if(exponent == 0)
 			return 1;
-		}
-		long output = number;
-		while(power > 1) {
-			output *= number;
-			power--;
+		long output = base;
+		while(exponent > 1) {
+			output *= base;
+			exponent--;
 		}
 		return output;
 	}
