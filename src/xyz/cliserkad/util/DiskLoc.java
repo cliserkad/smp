@@ -3,6 +3,7 @@ package xyz.cliserkad.util;
 import xyz.cliserkad.smp.SimpleEncoder;
 
 import java.io.File;
+import java.io.Serial;
 
 /**
  * Class that makes Files easier to work with
@@ -10,7 +11,8 @@ import java.io.File;
 public class DiskLoc extends File implements Copier<DiskLoc> {
 
 	public static final String DOT = ".";
-	private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = 20240821L;
 
 	// Not sure if forward slash is 100% foolproof
 	public DiskLoc(final String... pathParts) {
@@ -95,11 +97,6 @@ public class DiskLoc extends File implements Copier<DiskLoc> {
 	public Copy<DiskLoc> copy() {
 		final var dl = new DiskLoc(getPath());
 		return new Copy<>(this, dl);
-	}
-
-	@Override
-	public DiskLoc self() {
-		return this;
 	}
 
 }

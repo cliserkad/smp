@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import xyz.cliserkad.smp.Verifier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static xyz.cliserkad.smp.SimpleEncoder.encode;
 
 public class EncodeTest {
@@ -13,7 +14,7 @@ public class EncodeTest {
 	@Test
 	public void testCar() throws IllegalAccessException {
 		assertEquals(EXPECTED, encode(new Car()));
-		assert Verifier.verifyOrPrint(encode(new Car()));
+		assertTrue(Verifier.verifyOrPrint(encode(new Car())));
 	}
 
 }

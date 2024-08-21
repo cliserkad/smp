@@ -46,8 +46,8 @@ public final class Range implements Copier<Range>, Iterable<Integer> {
 	/**
 	 * Determines if this range contains the input, including the start but excluding the end
 	 *
-	 * @param n A number
-	 * @return if n is in range
+	 * @param n The number to check
+	 * @return n >= min && n < max
 	 */
 	public boolean has(final int n) {
 		return n >= min && n < max;
@@ -104,11 +104,6 @@ public final class Range implements Copier<Range>, Iterable<Integer> {
 	public Copy<Range> copy() {
 		final var r = new Range(min, max);
 		return new Copy<>(this, r);
-	}
-
-	@Override
-	public Range self() {
-		return this;
 	}
 
 	@Override

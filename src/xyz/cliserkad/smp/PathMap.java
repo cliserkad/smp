@@ -2,11 +2,13 @@ package xyz.cliserkad.smp;
 
 import xyz.cliserkad.util.Path;
 
+import java.io.Serial;
 import java.util.HashMap;
 
 public class PathMap<V> extends HashMap<Path, V> {
 
-	private static final long serialVersionUID = 1504298304584057564L;
+	@Serial
+	private static final long serialVersionUID = 20240821L;
 
 	/**
 	 * Retrieves the V related to specified Path. Returns null if no V is related. Will auto-cast String to Path.
@@ -16,15 +18,12 @@ public class PathMap<V> extends HashMap<Path, V> {
 	 */
 	@Override
 	public V get(final Object key) {
-		if(key instanceof String) {
-			return super.get(new Path((String) key));
-		} else if(key instanceof Path) {
-			return super.get(key);
-		} else if(key instanceof String[]) {
-			return super.get(new Path((String[]) key));
-		} else {
-			return null;
-		}
+		return switch(key) {
+			case String s -> super.get(new Path(s));
+			case Path ignored -> super.get(key);
+			case String[] strings -> super.get(new Path(strings));
+			case null, default -> null;
+		};
 	}
 
 	/**

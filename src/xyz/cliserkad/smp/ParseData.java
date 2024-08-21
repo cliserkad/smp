@@ -2,12 +2,12 @@ package xyz.cliserkad.smp;
 
 import xyz.cliserkad.util.Path;
 
+import java.io.Serial;
+
 public class ParseData extends PathMap<Object> {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -4121653623739479034L;
+	@Serial
+	private static final long serialVersionUID = 20240821L;
 	public static final String DEFAULT_STRING = "";
 	public static final char DEFAULT_CHAR = ' ';
 	public static final int DEFAULT_INT = 0;

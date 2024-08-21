@@ -54,9 +54,4 @@ public class SerialCopier<T extends Serializable> implements Copier<T> {
 		}
 	}
 
-	@Override
-	public T self() {
-		return object;
-	}
-
 }

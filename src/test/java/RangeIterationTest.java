@@ -15,7 +15,7 @@ public class RangeIterationTest {
 	@Test
 	public void testRange() {
 		Range range = new Range(0, 10);
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder(EXPECTED_OUTPUT_1.length());
 		for(int i : range) {
 			sb.append(i);
 		}

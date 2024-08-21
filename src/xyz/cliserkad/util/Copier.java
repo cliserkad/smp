@@ -4,7 +4,6 @@ package xyz.cliserkad.util;
  * Implementers will have copy() to allow for copying the values of an object while having a different reference. Implementers must have equals() defined, otherwise checkClone will always fail and throw an IllegalStateException.
  *
  * @param <Type>
- * @author Bryan Johnson
  */
 public interface Copier<Type> {
 
@@ -51,13 +50,6 @@ public interface Copier<Type> {
 	 * @return a <code>Copy</code>
 	 */
 	Copy<Type> copy();
-
-	/**
-	 * Provides access to the object that is implementing Copies. Should be defined as <code>return this;</code>.
-	 *
-	 * @return Implementation
-	 */
-	Type self();
 
 	/**
 	 * Container class that holds the data from <code>Copies.copy()</code>.

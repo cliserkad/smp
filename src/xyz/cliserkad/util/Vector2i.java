@@ -59,11 +59,6 @@ public final class Vector2i implements Copier<Vector2i> {
 	}
 
 	@Override
-	public Vector2i self() {
-		return this;
-	}
-
-	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);
 	}
