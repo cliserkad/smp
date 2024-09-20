@@ -1,5 +1,7 @@
 package xyz.cliserkad.util;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -9,7 +11,10 @@ import static xyz.cliserkad.util.Math.min;
 /**
  * Represents a range. The range is inclusive for its minimum but exclusive for its maximum.
  */
-public final class Range implements Copier<Range>, Iterable<Integer> {
+public final class Range implements Copier<Range>, Iterable<Integer>, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = SerialVersionUIDGenerator.generateSerialVersionUID(Range.class);
 
 	public final int min;
 	public final int max;

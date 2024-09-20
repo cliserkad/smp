@@ -1,11 +1,15 @@
 package xyz.cliserkad.util;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import static xyz.cliserkad.util.SerialVersionUIDGenerator.generateSerialVersionUID;
+
 public class Path implements Serializable {
 
-	private static final long serialVersionUID = 5596584287964181971L;
+	@Serial
+	private static final long serialVersionUID = generateSerialVersionUID(Path.class);
 	public static final char PATH_SEPARATOR = '/';
 
 	public static void checkArray(final String[] array) {

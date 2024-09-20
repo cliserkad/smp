@@ -4,13 +4,15 @@ import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
+import static xyz.cliserkad.util.SerialVersionUIDGenerator.generateSerialVersionUID;
+
 /**
  * Improved version of ArrayList
  */
 public class BestList<E> extends ArrayList<E> {
 
 	@Serial
-	private static final long serialVersionUID = 20240919L;
+	private static final long serialVersionUID = generateSerialVersionUID(BestList.class);
 
 	@SafeVarargs
 	public BestList(final E... elements) {

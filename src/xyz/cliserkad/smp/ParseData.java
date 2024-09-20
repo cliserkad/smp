@@ -4,10 +4,12 @@ import xyz.cliserkad.util.Path;
 
 import java.io.Serial;
 
+import static xyz.cliserkad.util.SerialVersionUIDGenerator.generateSerialVersionUID;
+
 public class ParseData extends PathMap<Object> {
 
 	@Serial
-	private static final long serialVersionUID = 20240821L;
+	private static final long serialVersionUID = generateSerialVersionUID(ParseData.class);
 	public static final String DEFAULT_STRING = "";
 	public static final char DEFAULT_CHAR = ' ';
 	public static final int DEFAULT_INT = 0;

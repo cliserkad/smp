@@ -5,10 +5,12 @@ import xyz.cliserkad.util.Path;
 import java.io.Serial;
 import java.util.HashMap;
 
+import static xyz.cliserkad.util.SerialVersionUIDGenerator.generateSerialVersionUID;
+
 public class PathMap<V> extends HashMap<Path, V> {
 
 	@Serial
-	private static final long serialVersionUID = 20240821L;
+	private static final long serialVersionUID = generateSerialVersionUID(PathMap.class);
 
 	/**
 	 * Retrieves the V related to specified Path. Returns null if no V is related. Will auto-cast String to Path.

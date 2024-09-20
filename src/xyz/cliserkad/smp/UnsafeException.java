@@ -1,11 +1,13 @@
 package xyz.cliserkad.smp;
 
+import java.io.Serial;
+
+import static xyz.cliserkad.util.SerialVersionUIDGenerator.generateSerialVersionUID;
+
 public class UnsafeException extends Exception {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 7717159791855060651L;
+	@Serial
+	private static final long serialVersionUID = generateSerialVersionUID(UnsafeException.class);
 	private final Exception cause;
 
 	public UnsafeException(final Exception cause) {

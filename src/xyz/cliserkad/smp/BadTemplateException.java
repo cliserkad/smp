@@ -1,8 +1,13 @@
 package xyz.cliserkad.smp;
 
+import java.io.Serial;
+
+import static xyz.cliserkad.util.SerialVersionUIDGenerator.generateSerialVersionUID;
+
 public class BadTemplateException extends Exception {
 
-	private static final long serialVersionUID = -7085178496879726407L;
+	@Serial
+	private static final long serialVersionUID = generateSerialVersionUID(BadTemplateException.class);
 	private final Class<?> template;
 	private final ReflectiveOperationException cause;
 

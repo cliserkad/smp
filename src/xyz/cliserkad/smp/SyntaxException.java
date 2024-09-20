@@ -1,9 +1,14 @@
 package xyz.cliserkad.smp;
 
+import java.io.Serial;
+
+import static xyz.cliserkad.util.SerialVersionUIDGenerator.generateSerialVersionUID;
+
 public class SyntaxException extends Exception {
 
 	// increment when this file is modified
-	public static final long serialVersionUID = 1;
+	@Serial
+	private static final long serialVersionUID = generateSerialVersionUID(SyntaxException.class);
 
 	public final String msg;
 	public final int line;

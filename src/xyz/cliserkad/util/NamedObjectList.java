@@ -1,8 +1,13 @@
 package xyz.cliserkad.util;
 
+import java.io.Serial;
+
+import static xyz.cliserkad.util.SerialVersionUIDGenerator.generateSerialVersionUID;
+
 public class NamedObjectList<T extends NamedObject> extends BestList<T> {
 
-	private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = generateSerialVersionUID(NamedObjectList.class);
 
 	private StringList names;
 

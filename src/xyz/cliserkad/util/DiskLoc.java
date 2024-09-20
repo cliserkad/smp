@@ -5,6 +5,8 @@ import xyz.cliserkad.smp.SimpleEncoder;
 import java.io.File;
 import java.io.Serial;
 
+import static xyz.cliserkad.util.SerialVersionUIDGenerator.generateSerialVersionUID;
+
 /**
  * Class that makes Files easier to work with
  */
@@ -12,7 +14,7 @@ public class DiskLoc extends File implements Copier<DiskLoc> {
 
 	public static final String DOT = ".";
 	@Serial
-	private static final long serialVersionUID = 20240821L;
+	private static final long serialVersionUID = generateSerialVersionUID(DiskLoc.class);
 
 	// Not sure if forward slash is 100% foolproof
 	public DiskLoc(final String... pathParts) {

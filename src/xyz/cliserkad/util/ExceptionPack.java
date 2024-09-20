@@ -3,10 +3,12 @@ package xyz.cliserkad.util;
 import java.io.Serial;
 import java.util.List;
 
+import static xyz.cliserkad.util.SerialVersionUIDGenerator.generateSerialVersionUID;
+
 public class ExceptionPack extends Exception {
 
 	@Serial
-	private static final long serialVersionUID = 1939447964468120636L;
+	private static final long serialVersionUID = generateSerialVersionUID(ExceptionPack.class);
 
 	public static final String NO_MSG = "No message provided";
 
