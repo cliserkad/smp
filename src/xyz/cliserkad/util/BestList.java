@@ -1,17 +1,16 @@
 package xyz.cliserkad.util;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Improved version of ArrayList that implements XML
- *
- * @param <E>
- * @author Bryan Johnson
+ * Improved version of ArrayList
  */
 public class BestList<E> extends ArrayList<E> {
 
-	private static final long serialVersionUID = 1L;
+	@Serial
+	private static final long serialVersionUID = 20240919L;
 
 	@SafeVarargs
 	public BestList(final E... elements) {
@@ -27,6 +26,14 @@ public class BestList<E> extends ArrayList<E> {
 	@SafeVarargs
 	public static <E> BestList<E> list(final E... element) {
 		return new BestList<>(element);
+	}
+
+	public static <E> BestList<E> nonNullList(final List<E> in) {
+		if(in == null) {
+			return new BestList<>();
+		} else {
+			return new BestList<>(in);
+		}
 	}
 
 	// unchecked because parent add() function in ArrayList is also unchecked
@@ -94,14 +101,6 @@ public class BestList<E> extends ArrayList<E> {
 			out.append(elm.toString().replace(",", "")).append(",");
 		}
 		return out.toString();
-	}
-
-	public static <E> BestList<E> nonNullList(final List<E> in) {
-		if(in == null) {
-			return new BestList<>();
-		} else {
-			return new BestList<>(in);
-		}
 	}
 
 }
