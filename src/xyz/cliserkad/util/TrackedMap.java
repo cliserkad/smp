@@ -1,7 +1,11 @@
 package xyz.cliserkad.util;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * A container that has both a list and a map to use them as one. This was primarily made for caching.
@@ -21,13 +25,13 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	/**
 	 * The container retains the relationship between keys and elements. Elements are always retrieved using a key
 	 */
-	private final ConcurrentHashMap<K, Optional<E>> container;
+	private final ConcurrentHashMap<K, E> container;
 
 	/**
 	 * Creates a TrackedHashMap() and sets the tracker's capacity to 0.
 	 */
 	public TrackedMap() {
-		tracker = new ArrayList<>();
+		tracker = new CopyOnWriteArrayList<>();
 		container = new ConcurrentHashMap<>();
 	}
 
@@ -82,7 +86,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @return associated key or null
 	 */
 	public K key(final E element) {
-		for(var i = 0; i < size(); i++) {
+		for(int i = 0; i < size(); i++) {
 			if(get(i).equals(element)) {
 				return key(i);
 			}
@@ -134,7 +138,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 
 	public List<K> keys() {
 		final List<K> copy = new ArrayList<>();
-		for(var i = 0; i < size(); i++) {
+		for(int i = 0; i < size(); i++) {
 			copy.add(key(i));
 		}
 		return copy;
@@ -163,7 +167,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @return The element that is being retrieved
 	 */
 	public E get(final K key) {
-		return container.get(key).orElse(null);
+		return container.get(key);
 	}
 
 	/**
@@ -173,7 +177,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @return The element at the given index
 	 */
 	public E get(final int i) {
-		return container.get(key(i)).orElse(null);
+		return container.get(key(i));
 	}
 
 	/**
@@ -182,7 +186,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	 * @return A random element.
 	 */
 	public E getRandom() {
-		return container.get(randomKey()).orElse(null);
+		return container.get(randomKey());
 	}
 
 	// Adding
@@ -196,7 +200,8 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	public void add(final K key, final E element) {
 		if(!contains(key)) {
 			tracker.add(key);
-			container.put(key, Optional.ofNullable(element));
+			if(element != null)
+				container.put(key, element);
 		}
 	}
 
@@ -211,7 +216,9 @@ public class TrackedMap<K, E> implements Iterable<E> {
 			remove(key);
 		}
 		tracker.add(key);
-		container.put(key, Optional.ofNullable(element));
+		if(element != null) {
+			container.put(key, element);
+		}
 	}
 
 	// Removing
@@ -306,7 +313,7 @@ public class TrackedMap<K, E> implements Iterable<E> {
 			return false;
 		}
 
-		for(var i = 0; i < input.size(); i++) {
+		for(int i = 0; i < input.size(); i++) {
 			if(!key(i).equals(input.key(i))) {
 				return false;
 			}
