@@ -1,15 +1,21 @@
 package xyz.cliserkad.util;
 
+import test.java.MergeSortTest;
+
 import java.util.concurrent.RecursiveTask;
 
 /** Threaded Merge Sort */
-public class MergeSort<T> extends RecursiveTask<Comparable<T>[]> {
+public class MergeSort<Sortable extends Comparable<? super Sortable>> extends RecursiveTask<Sortable[]> {
 
 	public static final int INSERTION_SORT_THRESHOLD = 256;
 
-	private final Comparable<T>[] array;
+	private final Sortable[] array;
 
-	public MergeSort(final Comparable<T>[] array) {
+	public static void main(String[] args) {
+		new MergeSortTest().testArray();
+	}
+
+	public MergeSort(Sortable[] array) {
 		this.array = array;
 	}
 
@@ -19,16 +25,16 @@ public class MergeSort<T> extends RecursiveTask<Comparable<T>[]> {
 	 * @param array The array to sort
 	 * @return The sorted array
 	 */
-	public static <T> Comparable<T>[] sort(Comparable<T>[] array) {
+	public static <LocalSortable extends Comparable<? super LocalSortable>> LocalSortable[] sort(LocalSortable[] array) {
 		return new MergeSort<>(array).compute();
 	}
 
-	private static <T> void merge(Comparable<T>[] source, Comparable<T>[] leftPart, Comparable<T>[] rightPart) {
+	private static <LocalSortable extends Comparable<? super LocalSortable>> void merge(LocalSortable[] source, LocalSortable[] leftPart, LocalSortable[] rightPart) {
 		int leftIndex = 0;
 		int rightIndex = 0;
 		int sourceIndex = 0;
 		while(leftIndex < leftPart.length && rightIndex < rightPart.length) {
-			if(leftPart[leftIndex].compareTo((T) rightPart[rightIndex]) <= 0) {
+			if(leftPart[leftIndex].compareTo(rightPart[rightIndex]) <= 0) {
 				source[sourceIndex++] = leftPart[leftIndex++];
 			} else {
 				source[sourceIndex++] = rightPart[rightIndex++];
@@ -48,10 +54,10 @@ public class MergeSort<T> extends RecursiveTask<Comparable<T>[]> {
 	 * @param array The array to sort
 	 * @return The sorted array
 	 */
-	public static <T> Comparable<T>[] insertionSort(Comparable<T>[] array) {
+	public static <LocalSortable extends Comparable<? super LocalSortable>> LocalSortable[] insertionSort(LocalSortable[] array) {
 		for(int keyIndex = 1; keyIndex < array.length; ++keyIndex) {
 			// key to test targets against
-			Comparable<T> key = array[keyIndex];
+			LocalSortable key = array[keyIndex];
 			// index to target for insertion
 			int targetIndex = keyIndex - 1;
 
@@ -59,7 +65,7 @@ public class MergeSort<T> extends RecursiveTask<Comparable<T>[]> {
                greater than key, to one position ahead
                of their current position */
 			/* unchecked cast here, I'm purposefully letting this error out if the elements are incompatible */
-			while(targetIndex >= 0 && array[targetIndex].compareTo((T) key) > 0) {
+			while(targetIndex >= 0 && array[targetIndex].compareTo(key) > 0) {
 				array[targetIndex + 1] = array[targetIndex];
 				targetIndex--;
 			}
@@ -69,7 +75,7 @@ public class MergeSort<T> extends RecursiveTask<Comparable<T>[]> {
 	}
 
 	@Override
-	protected Comparable<T>[] compute() {
+	protected Sortable[] compute() {
 		// when the array is too small, creating threads isn't worth the overhead
 		// this also serves as the base sorting algorithm, instead of a simple 2 element swap
 		if(array.length < INSERTION_SORT_THRESHOLD) {
@@ -79,14 +85,16 @@ public class MergeSort<T> extends RecursiveTask<Comparable<T>[]> {
 		int mid = array.length / 2;
 
 		// numbers to the left of the mid point
-		Comparable<T>[] leftPart = new Comparable[mid];
+		@SuppressWarnings("unchecked") // Object[] will contain only nulls and be filled with Sortables from this.array
+		Sortable[] leftPart = (Sortable[]) new Comparable[mid];
 		System.arraycopy(array, 0, leftPart, 0, mid);
-		MergeSort<T> leftSorter = new MergeSort<>(leftPart);
+		MergeSort<Sortable> leftSorter = new MergeSort<>(leftPart);
 
 		// numbers to the right of the mid point
-		Comparable<T>[] rightPart = new Comparable[array.length - mid];
+		@SuppressWarnings("unchecked") // Object[] will contain only nulls and be filled with Sortables from this.array
+		Sortable[] rightPart = (Sortable[]) new Comparable[array.length - mid];
 		System.arraycopy(array, mid, rightPart, 0, array.length - mid);
-		MergeSort<T> rightSorter = new MergeSort<>(rightPart);
+		MergeSort<Sortable> rightSorter = new MergeSort<>(rightPart);
 
 		// dispatch threads
 		leftSorter.fork();
