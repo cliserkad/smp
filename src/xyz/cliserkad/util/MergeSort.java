@@ -2,21 +2,38 @@ package xyz.cliserkad.util;
 
 import test.java.MergeSortTest;
 
+import java.util.Arrays;
 import java.util.concurrent.RecursiveTask;
 
 /** Threaded Merge Sort */
 public class MergeSort<Sortable extends Comparable<? super Sortable>> extends RecursiveTask<Sortable[]> {
 
-	public static final int INSERTION_SORT_THRESHOLD = 256;
+	/** the number of cores available to the JVM. Informs the default number of threads */
+	public static final int AMT_CORES = Runtime.getRuntime().availableProcessors();
+
+	/** prevent a potential stack overflow by limiting the number of threads. */
+	public static final int MAX_THREADS_MAX = 1024;
 
 	private final Sortable[] array;
+	public final int depth;
+	public final int maxThreads;
 
 	public static void main(String[] args) {
 		new MergeSortTest().testArray();
 	}
 
 	public MergeSort(Sortable[] array) {
+		this(array, 0, AMT_CORES);
+	}
+
+	public MergeSort(Sortable[] array, final int maxThreads) {
+		this(array, 0, maxThreads);
+	}
+
+	private MergeSort(Sortable[] array, final int depth, final int maxThreads) {
 		this.array = array;
+		this.depth = depth;
+		this.maxThreads = Math.min(maxThreads, MAX_THREADS_MAX);
 	}
 
 	/**
@@ -27,6 +44,17 @@ public class MergeSort<Sortable extends Comparable<? super Sortable>> extends Re
 	 */
 	public static <LocalSortable extends Comparable<? super LocalSortable>> LocalSortable[] sort(LocalSortable[] array) {
 		return new MergeSort<>(array).compute();
+	}
+
+	/**
+	 * Sorts an array of Comparable using a Threaded Merge Sort
+	 *
+	 * @param array      The array to sort
+	 * @param maxThreads The maximum number of threads to use
+	 * @return The sorted array
+	 */
+	public static <LocalSortable extends Comparable<? super LocalSortable>> LocalSortable[] sort(LocalSortable[] array, final int maxThreads) {
+		return new MergeSort<>(array, maxThreads).compute();
 	}
 
 	private static <LocalSortable extends Comparable<? super LocalSortable>> void merge(LocalSortable[] source, LocalSortable[] leftPart, LocalSortable[] rightPart) {
@@ -76,10 +104,10 @@ public class MergeSort<Sortable extends Comparable<? super Sortable>> extends Re
 
 	@Override
 	protected Sortable[] compute() {
-		// when the array is too small, creating threads isn't worth the overhead
-		// this also serves as the base sorting algorithm, instead of a simple 2 element swap
-		if(array.length < INSERTION_SORT_THRESHOLD) {
-			return insertionSort(array);
+		// divide the array by 2 until we maximize cpu usage
+		if(Math.pow(2, depth + 1) > maxThreads) {
+			Arrays.sort(array);
+			return array;
 		}
 
 		int mid = array.length / 2;
@@ -88,13 +116,13 @@ public class MergeSort<Sortable extends Comparable<? super Sortable>> extends Re
 		@SuppressWarnings("unchecked") // Object[] will contain only nulls and be filled with Sortables from this.array
 		Sortable[] leftPart = (Sortable[]) new Comparable[mid];
 		System.arraycopy(array, 0, leftPart, 0, mid);
-		MergeSort<Sortable> leftSorter = new MergeSort<>(leftPart);
+		MergeSort<Sortable> leftSorter = new MergeSort<>(leftPart, depth + 1, maxThreads);
 
 		// numbers to the right of the mid point
 		@SuppressWarnings("unchecked") // Object[] will contain only nulls and be filled with Sortables from this.array
 		Sortable[] rightPart = (Sortable[]) new Comparable[array.length - mid];
 		System.arraycopy(array, mid, rightPart, 0, array.length - mid);
-		MergeSort<Sortable> rightSorter = new MergeSort<>(rightPart);
+		MergeSort<Sortable> rightSorter = new MergeSort<>(rightPart, depth + 1, maxThreads);
 
 		// dispatch threads
 		leftSorter.fork();
