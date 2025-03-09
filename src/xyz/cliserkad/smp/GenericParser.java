@@ -65,18 +65,85 @@ public class GenericParser {
 						out.putAll(parse(currentPath.delete(), currentPath.last() + ":" + builder + ";"));
 						builder.setLength(0);
 						final var depth = Integer.parseInt(currentPath.last());
-						currentPath = currentPath.delete().append(depth + 1 + "");
 						if(smp.charAt(a) == LIST_END) {
 							final var listSize = Integer.parseInt(currentPath.last());
-							final var array = new Object[listSize];
+							final var objArray = new Object[listSize];
 							for(var b = 0; b < listSize; b++) {
-								array[b] = out.get(currentPath.delete().append(b + ""));
+								objArray[b] = out.get(currentPath.delete().append(b + ""));
 							}
 							currentPath = currentPath.delete();
-							out.put(currentPath, array);
+
+							// attempt to coerce Object[] to primitive array
+							var first = objArray[0];
+							boolean allSameClass = true;
+							for(var b = 1; b < objArray.length; b++) {
+								if(objArray[b] == null || !objArray[b].getClass().equals(first.getClass())) {
+									allSameClass = false;
+									break;
+								}
+							}
+							if(allSameClass) {
+								switch(first) {
+									case Byte b -> {
+										byte[] bytes = new byte[objArray.length];
+										for(var i = 0; i < objArray.length; i++) {
+											bytes[i] = (byte) objArray[i];
+										}
+										out.put(currentPath, bytes);
+									}
+									case Short s -> {
+										short[] shorts = new short[objArray.length];
+										for(var i = 0; i < objArray.length; i++) {
+											shorts[i] = (short) objArray[i];
+										}
+										out.put(currentPath, shorts);
+									}
+									case Character c -> {
+										char[] chars = new char[objArray.length];
+										for(var i = 0; i < objArray.length; i++) {
+											chars[i] = (char) objArray[i];
+										}
+										out.put(currentPath, chars);
+									}
+									case Integer i -> {
+										int[] ints = new int[objArray.length];
+										for(var i2 = 0; i2 < objArray.length; i2++) {
+											ints[i2] = (int) objArray[i2];
+										}
+										out.put(currentPath, ints);
+									}
+									case Float f -> {
+										float[] floats = new float[objArray.length];
+										for(var i = 0; i < objArray.length; i++) {
+											floats[i] = (float) objArray[i];
+										}
+										out.put(currentPath, floats);
+									}
+									case Long l -> {
+										long[] longs = new long[objArray.length];
+										for(var i = 0; i < objArray.length; i++) {
+											longs[i] = (long) objArray[i];
+										}
+										out.put(currentPath, longs);
+									}
+									case Double d -> {
+										double[] doubles = new double[objArray.length];
+										for(var i = 0; i < objArray.length; i++) {
+											doubles[i] = (double) objArray[i];
+										}
+										out.put(currentPath, doubles);
+									}
+									case null, default -> out.put(currentPath, objArray);
+								}
+							} else {
+								out.put(currentPath, objArray);
+							}
+						} else {
+							currentPath = currentPath.delete().append(String.valueOf(depth + 1));
 						}
 					} else if(smp.charAt(a) == PAIR_END) {
 						if(out.get(currentPath) == null) {
+
 							out.put(currentPath.copy(), parsePrimitive(builder.toString()));
 						}
 						builder.setLength(0);
@@ -91,7 +158,6 @@ public class GenericParser {
 				}
 			}
 		}
-
 		return out;
 	}
 

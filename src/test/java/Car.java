@@ -36,7 +36,7 @@ public class Car {
 		final var builder = new StringBuilder();
 		builder.append("year:").append(year).append("\n");
 		builder.append("model:").append(model).append("\n");
-		builder.append("engine:").append(engine).append("\n");
+		builder.append("engine: {\n").append(engine).append("};\n");
 		builder.append("type:").append(type).append("\n");
 		builder.append("driveModes:").append(driveModes).append("\n");
 		return builder.toString();

@@ -12,4 +12,12 @@ public class Engine {
 		mpg = 14.834f;
 	}
 
+	public String toString() {
+		final var builder = new StringBuilder();
+		builder.append("\tcylinders:").append(cylinders).append("\n");
+		builder.append("\tname:").append(name).append("\n");
+		builder.append("\tmpg:").append(mpg).append("\n");
+		return builder.toString();
+	}
+
 }
