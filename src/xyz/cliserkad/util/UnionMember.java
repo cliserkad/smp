@@ -1,17 +1,13 @@
 package xyz.cliserkad.util;
 
+import java.util.Objects;
+
 public class UnionMember<Type> implements Union {
 
 	private final Type value;
 
 	public UnionMember(Type value) throws NullPointerException {
-		this.value = failIfNull(value);
-	}
-
-	public static <ArgumentType> ArgumentType failIfNull(ArgumentType argument) throws NullPointerException {
-		if(argument == null)
-			throw new NullPointerException("value cannot be null");
-		return argument;
+		this.value = Objects.requireNonNull(value);
 	}
 
 	@Override
