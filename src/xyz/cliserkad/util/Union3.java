@@ -3,7 +3,8 @@ package xyz.cliserkad.util;
 import java.util.function.Function;
 
 /**
- * A class that can be one of three types. This is useful for three unrelated types that need to be stored in the same variable.
+ * A class that can be one of three types. This is useful for three unrelated types that need to be stored in the same
+ * variable.
  */
 public sealed interface Union3<TypeA, TypeB, TypeC> extends Union3Extendable<TypeA, TypeB, TypeC> {
 

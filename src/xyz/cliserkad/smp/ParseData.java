@@ -40,7 +40,8 @@ public class ParseData extends PathMap<Object> {
 	}
 
 	/**
-	 * Attempts to retrieve a value and cast it to the given type. Returns null if the value is incompatible with the given type.
+	 * Attempts to retrieve a value and cast it to the given type. Returns null if the value is incompatible with the
+	 * given type.
 	 */
 	private <T> T getType(final Object key, final Class<T> type) {
 		final var value = get(key);

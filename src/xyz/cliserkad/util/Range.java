@@ -126,6 +126,7 @@ public final class Range implements Copier<Range>, Iterable<Integer>, Serializab
 			public Integer next() {
 				return currentIndex++;
 			}
+
 		};
 	}
 

@@ -2,7 +2,9 @@ package xyz.cliserkad.util;
 
 import java.io.*;
 
-@SuppressWarnings("ClassCanBeRecord") // Making this class in to a record would make "object" public
+@SuppressWarnings(
+	"ClassCanBeRecord"
+) // Making this class in to a record would make "object" public
 public class SerialCopier<T extends Serializable> implements Copier<T> {
 
 	public static final BestList<Class<?>> SIMPLE_TYPES = new BestList<>(Integer.class, Boolean.class, String.class, Long.class, Double.class, Character.class);

@@ -89,9 +89,9 @@ public class MergeSort<Sortable extends Comparable<? super Sortable>> extends Re
 			// index to target for insertion
 			int targetIndex = keyIndex - 1;
 
-            /* Move elements of array[0..keyIndex-1], that are
-               greater than key, to one position ahead
-               of their current position */
+			/* Move elements of array[0..keyIndex-1], that are
+			greater than key, to one position ahead
+			of their current position */
 			/* unchecked cast here, I'm purposefully letting this error out if the elements are incompatible */
 			while(targetIndex >= 0 && array[targetIndex].compareTo(key) > 0) {
 				array[targetIndex + 1] = array[targetIndex];
@@ -113,13 +113,17 @@ public class MergeSort<Sortable extends Comparable<? super Sortable>> extends Re
 		int mid = array.length / 2;
 
 		// numbers to the left of the mid point
-		@SuppressWarnings("unchecked") // Object[] will contain only nulls and be filled with Sortables from this.array
+		@SuppressWarnings(
+			"unchecked"
+		) // Object[] will contain only nulls and be filled with Sortables from this.array
 		Sortable[] leftPart = (Sortable[]) new Comparable[mid];
 		System.arraycopy(array, 0, leftPart, 0, mid);
 		MergeSort<Sortable> leftSorter = new MergeSort<>(leftPart, depth + 1, maxThreads);
 
 		// numbers to the right of the mid point
-		@SuppressWarnings("unchecked") // Object[] will contain only nulls and be filled with Sortables from this.array
+		@SuppressWarnings(
+			"unchecked"
+		) // Object[] will contain only nulls and be filled with Sortables from this.array
 		Sortable[] rightPart = (Sortable[]) new Comparable[array.length - mid];
 		System.arraycopy(array, mid, rightPart, 0, array.length - mid);
 		MergeSort<Sortable> rightSorter = new MergeSort<>(rightPart, depth + 1, maxThreads);

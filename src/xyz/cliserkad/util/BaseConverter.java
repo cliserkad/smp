@@ -9,7 +9,9 @@ import static xyz.cliserkad.util.Math.pow;
 import static xyz.cliserkad.util.Text.*;
 
 /**
- * Converts numbers to strings and vice versa. Supports bases of 2 to 64. Final strings are probably non-standard and unusable in other programs, but the layout is closer to ASCII than standard. Runs in <100 milliseconds on an Apple M1 Pro.
+ * Converts numbers to strings and vice versa. Supports bases of 2 to 64. Final strings are probably non-standard and
+ * unusable in other programs, but the layout is closer to ASCII than standard. Runs in <100 milliseconds on an Apple M1
+ * Pro.
  */
 public class BaseConverter {
 

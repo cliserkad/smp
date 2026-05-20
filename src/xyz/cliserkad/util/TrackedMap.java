@@ -38,7 +38,8 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	// Stats
 
 	/**
-	 * Returns the size of this TrackedHashMap. The size is gotten from the tracker. Specifically, <code>tracker.size()</code>
+	 * Returns the size of this TrackedHashMap. The size is gotten from the tracker. Specifically,
+	 * <code>tracker.size()</code>
 	 *
 	 * @return size
 	 */
@@ -56,7 +57,8 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	}
 
 	/**
-	 * Specifies if this TrackedHashMap contains the given key. The key's existence is determined in the container. Specifically,
+	 * Specifies if this TrackedHashMap contains the given key. The key's existence is determined in the container.
+	 * Specifically,
 	 * <code>container.containsKey(key)</code>
 	 *
 	 * @param key The key whose existence is in question
@@ -105,7 +107,8 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	}
 
 	/**
-	 * Grabs the last key that was added to this TrackedHashMap. The key is grabbed from the tracker. Specifically, <code>key(size() - 1)</code>
+	 * Grabs the last key that was added to this TrackedHashMap. The key is grabbed from the tracker. Specifically,
+	 * <code>key(size() - 1)</code>
 	 *
 	 * @return The last added key
 	 */
@@ -114,7 +117,8 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	}
 
 	/**
-	 * Grabs the first key that was added to this TrackedHashMap. The key is grabbed from the tracker. Specifically, <code>key(0)</code>
+	 * Grabs the first key that was added to this TrackedHashMap. The key is grabbed from the tracker. Specifically,
+	 * <code>key(0)</code>
 	 *
 	 * @return The first key
 	 */
@@ -123,7 +127,8 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	}
 
 	/**
-	 * Attempts to determine the index of the given key in the tracker. If this TrackedMap doesn't contain the key, then -1 is returned.
+	 * Attempts to determine the index of the given key in the tracker. If this TrackedMap doesn't contain the key, then
+	 * -1 is returned.
 	 *
 	 * @param key The key whose index is desired
 	 * @return The index of the key. Or -1 if the key doesn't exist.
@@ -171,7 +176,8 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	}
 
 	/**
-	 * Retrieves the element at the given index. The element is retrieved by first getting the key at the given index from the tracker, then using that key to retrieve the element from the container.
+	 * Retrieves the element at the given index. The element is retrieved by first getting the key at the given index
+	 * from the tracker, then using that key to retrieve the element from the container.
 	 *
 	 * @param i Index to retrieve an element from
 	 * @return The element at the given index
@@ -181,7 +187,8 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	}
 
 	/**
-	 * Retrieves a random element. First gets a random key from the tracker. Then uses that key to retrieve the associated element.
+	 * Retrieves a random element. First gets a random key from the tracker. Then uses that key to retrieve the
+	 * associated element.
 	 *
 	 * @return A random element.
 	 */
@@ -303,7 +310,8 @@ public class TrackedMap<K, E> implements Iterable<E> {
 	}
 
 	/**
-	 * Determines equity between this TrackedHashMap and another one with similar key and element types. Checks if each key and element are equal across maps and are in sequence.
+	 * Determines equity between this TrackedHashMap and another one with similar key and element types. Checks if each
+	 * key and element are equal across maps and are in sequence.
 	 *
 	 * @param input A TrackedHashMap with like key and element types
 	 * @return Equity of this and the input

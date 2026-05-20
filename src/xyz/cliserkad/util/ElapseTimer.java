@@ -17,7 +17,8 @@ public class ElapseTimer {
 	}
 
 	/**
-	 * Provides the typically desired output, which is the difference in nanoseconds between when this ElapseTimer was instantiated and now; the elapsed time.
+	 * Provides the typically desired output, which is the difference in nanoseconds between when this ElapseTimer was
+	 * instantiated and now; the elapsed time.
 	 *
 	 * @return elapsed time
 	 */

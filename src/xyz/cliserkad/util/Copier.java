@@ -1,7 +1,8 @@
 package xyz.cliserkad.util;
 
 /**
- * Implementers will have copy() to allow for copying the values of an object while having a different reference. Implementers must have equals() defined, otherwise checkClone will always fail and throw an IllegalStateException.
+ * Implementers will have copy() to allow for copying the values of an object while having a different reference.
+ * Implementers must have equals() defined, otherwise checkClone will always fail and throw an IllegalStateException.
  *
  * @param <Type>
  */
@@ -14,7 +15,7 @@ public interface Copier<Type> {
 	 * @param original Parent object
 	 * @param copy     Child object
 	 * @return <code>true</code> if <code>copy</code> is a proper copy of
-	 * <code>original</code>
+	 *         <code>original</code>
 	 */
 	static <Any> boolean checkCopy(final Any original, final Any copy) {
 		try {
@@ -93,7 +94,9 @@ public interface Copier<Type> {
 		 *
 		 * @return <code>data.equals(o);</code>
 		 */
-		@SuppressWarnings("EqualsWhichDoesntCheckParameterClass") // This method is generic & the underlying object checks the type
+		@SuppressWarnings(
+			"EqualsWhichDoesntCheckParameterClass"
+		) // This method is generic & the underlying object checks the type
 		@Override
 		public boolean equals(final Object o) {
 			return data.equals(o);

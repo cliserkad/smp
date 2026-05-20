@@ -36,7 +36,8 @@ public class GenericParser {
 	}
 
 	/**
-	 * Creates a Map which contains the data from an smp encoded string. This makes smp values queryable in an easy to understand manner.
+	 * Creates a Map which contains the data from an smp encoded string. This makes smp values queryable in an easy to
+	 * understand manner.
 	 *
 	 * @param smp A string representing any data encoded in smp
 	 * @return a Map with keys and values from smp

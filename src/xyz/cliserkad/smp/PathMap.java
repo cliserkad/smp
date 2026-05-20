@@ -45,7 +45,8 @@ public class PathMap<V> extends HashMap<Path, V> {
 	}
 
 	/**
-	 * Converts a list of Strings in to a Path, then retrieves the V related to that Path. Returns null if no V is related.
+	 * Converts a list of Strings in to a Path, then retrieves the V related to that Path. Returns null if no V is
+	 * related.
 	 *
 	 * @param parts >= 2 Strings, not containing /
 	 * @see PathMap#get(Object)
@@ -55,7 +56,8 @@ public class PathMap<V> extends HashMap<Path, V> {
 	}
 
 	/**
-	 * Retrieves the V related to specified Path. Returns defaultValue if no V is related. Will auto-cast String to Path.
+	 * Retrieves the V related to specified Path. Returns defaultValue if no V is related. Will auto-cast String to
+	 * Path.
 	 *
 	 * @param key          String or Path
 	 * @param defaultValue value to be returned instead of null

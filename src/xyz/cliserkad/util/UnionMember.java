@@ -20,7 +20,8 @@ public class UnionMember<Type> implements Union {
 	}
 
 	/**
-	 * Provides access to equals() method of underlying value. If the Object given is a Union, it will be unwrapped to compare underlying values.
+	 * Provides access to equals() method of underlying value. If the Object given is a Union, it will be unwrapped to
+	 * compare underlying values.
 	 */
 	@Override
 	public boolean equals(Object obj) {

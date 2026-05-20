@@ -13,7 +13,9 @@ import static xyz.cliserkad.smp.SimpleEncoder.encode;
  * TODO: Rewrite to reduce unsafe usage
  * TODO: Support complex / nested objects
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings(
+	"unchecked"
+)
 public class TemplateParser {
 
 	private static Unsafe unsafe = null;
